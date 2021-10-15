@@ -134,5 +134,23 @@ public class Donnee {
         this.freqOuvert=0;
         this.score=0;
     }
+    /*
+    * Méthode affichant toutes les données d'un fichier correspondant à une Donnee
+    */
+    public void afficheDonnee(){
+        Date d= new Date();
+        System.out.println("Nom: " +this.nom);
+        System.out.println("Taille: "+ this.taille +" Octets");
+        System.out.println("Path: " +this.path);
+        System.out.println("Extension: " +this.extension);
+        System.out.println("Date de creation: " +(d.getTime()-this.dateCrea));
+        System.out.println("Date de derniere modification: " +(d.getTime()-this.dateModif));
+        System.out.println("Date de derniere ouverture: "+ (d.getTime()-this.dateOuvert));
+        System.out.println("Reiteration du nom: " +this.nbNom);
+        System.out.println("Frequence de modification: "+ this.freqModif );
+        System.out.println("Frequence d'ouverture: "+ this.freqOuvert );
+        System.out.println("Score: "+ this.score);
+
+    }
     
 }
