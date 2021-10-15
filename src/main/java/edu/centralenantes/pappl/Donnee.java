@@ -21,9 +21,9 @@ public class Donnee {
     private String nom; // Nom du Fichier
     private String path; // Path du fichier
     private String extension; // Extension du fichier (pdf, png,..)
-    private FileTime dateCrea; // date de creation du fichier
-    private FileTime dateOuvert; // date de dernière ouverture du fichier
-    private FileTime dateModif; // date de dernière modif du fichier
+    private long dateCrea; // date de creation du fichier
+    private long dateOuvert; // date de dernière ouverture du fichier
+    private long dateModif; // date de dernière modif du fichier
     private int freqModif; // fréquence de modif du fichier
     private int freqOuvert; // fréquence d'ouverture du fichier
     private int nbNom; // nombre de fois que le Nom est "répété"
@@ -54,19 +54,19 @@ public class Donnee {
         this.extension = extension;
     }
 
-    public FileTime getDateCrea() {
+    public long getDateCrea() {
         return dateCrea;
     }
 
-    public void setDateCrea(FileTime dateCrea) {
+    public void setDateCrea(long dateCrea) {
         this.dateCrea = dateCrea;
     }
 
-    public FileTime getDateOuvert() {
+    public long getDateOuvert() {
         return dateOuvert;
     }
 
-    public void setDateOuvert(FileTime dateOuvert) {
+    public void setDateOuvert(long dateOuvert) {
         this.dateOuvert = dateOuvert;
     }
 
@@ -118,11 +118,10 @@ public class Donnee {
         File file= new File(path);
         BasicFileAttributes attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
         this.nom=file.getName();
-        this.dateModif=attr.lastModifiedTime();
-        this.dateCrea=attr.creationTime();
-        this.dateOuvert=attr.lastAccessTime();
+        this.dateModif=attr.lastModifiedTime().toMillis();
+        this.dateCrea=attr.creationTime().toMillis();
+        this.dateOuvert=attr.lastAccessTime().toMillis();
         this.taille= attr.size();
-
         int pos = path.lastIndexOf(".");// On recherhce le dernier . dans le fichierqui va correspondre au début de l'extension
         if (pos > -1) {
             this.extension=path.substring(pos);// On supprime tous les éléments du String précédent le point trouvé
