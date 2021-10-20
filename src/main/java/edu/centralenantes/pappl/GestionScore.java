@@ -26,6 +26,7 @@ public class GestionScore {
     private List<String> paths;
     private List<Donnee> donnees;
     private Parametres p;
+    private List<String> extensionsTraites;
     
     class Parametres{
         public double A,B,C,D,E,F,G;
@@ -75,7 +76,7 @@ public class GestionScore {
     
     
 
-    private List<String> extensionsTraites;
+    
     
     public GestionScore() {
         this.paths = new ArrayList();
@@ -84,6 +85,7 @@ public class GestionScore {
         this.donnees = new ArrayList();
         this.extensionsTraites = new ArrayList();
         this.p = new Parametres();
+
     }
     
     public GestionScore(ArrayList<String> path) {
@@ -185,9 +187,9 @@ public class GestionScore {
         s=p.A*(d.getDateOuvert()-d.getDateCrea())/(1+p.D*d.getFreqOuvert());
         s+=p.E*(d.getDateModif()-d.getDateCrea())/(1+p.F*d.getFreqModif());
         s*=(1+p.G*d.getTaille());
-        d.setScore(s);
-        
+        d.setScore(s);     
     }  
+
     public List<String> getExtensionsTraites() {
         return extensionsTraites;
     }
@@ -209,6 +211,8 @@ public class GestionScore {
     
     
     
+
+
     
     public void parcours_path(String chemin) throws IOException{
         boolean bName;
