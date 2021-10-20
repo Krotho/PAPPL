@@ -16,6 +16,10 @@ public class Test {
     public static void main(String[] arg) throws IOException{
         Donnee D= new Donnee("D:\\Program Files\\Info\\NETBEANS\\PAPPL\\pom.xml");
         D.afficheDonnee();
-        
+        GestionScore gS = new GestionScore();
+        for(int i =1;i<5;i++){
+            gS.calculScore(D, i);
+            System.out.println(D.getScore());
+        }
     }
 }
