@@ -17,7 +17,7 @@ import javax.swing.JFileChooser;
  *
  * @author Boulanger
  */
-public class Donnee {
+public class Donnee implements Comparable<Donnee>  {
     private String nom; // Nom du Fichier
     private String path; // Path du fichier
     private String extension; // Extension du fichier (pdf, png,..)
@@ -28,8 +28,17 @@ public class Donnee {
     private int freqOuvert; // fréquence d'ouverture du fichier
     private int nbNom; // nombre de fois que le Nom est "répété"
     private long taille; // taille du fichier en byte
-    private float score; // score total du fichier
+    private double score; // score total du fichier
 
+    public long getDateModif() {
+        return dateModif;
+    }
+
+    public void setDateModif(long dateModif) {
+        this.dateModif = dateModif;
+    }
+    
+    
     public String getNom() {
         return nom;
     }
@@ -102,18 +111,18 @@ public class Donnee {
         this.taille = taille;
     }
 
-    public float getScore() {
+    public double getScore() {
         return score;
     }
 
-    public void setScore(float score) {
+    public void setScore(double score) {
         this.score = score;
     }
     
     /*
     * Constructeur de la Classe Donnee créant une Donnee à partir d'un path lié à un vrai fichier
     */
-    public Donnee(String _path) throws IOException{
+    public Donnee(String _path) throws IOException {
         this.path=_path;
         File file= new File(path);
         BasicFileAttributes attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
@@ -151,6 +160,15 @@ public class Donnee {
         System.out.println("Frequence d'ouverture: "+ this.freqOuvert );
         System.out.println("Score: "+ this.score);
 
+    }
+    /**
+     * Méthode permettant de comparer une Donnée avec une autre en utilisant leur score
+     * @param d
+     * @return 
+     */
+    @Override
+    public int compareTo(Donnee d){
+        return (int)(this.score - d.getScore());
     }
     
 }
