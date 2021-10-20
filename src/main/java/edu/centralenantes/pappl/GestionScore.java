@@ -9,13 +9,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 /**
  *
  * @author asjou
  */
 public class GestionScore {
-    private List<String> path;
+
+    private List<String> paths;
     private List<Donnee> donnees;
     private Parametres p;
     
@@ -65,26 +73,44 @@ public class GestionScore {
 
     }
     
+    
+
+    private List<String> extensionsTraites;
+    
     public GestionScore() {
-        this.path = new ArrayList<>();
+        this.paths = new ArrayList();
         //Le chemin par défaut est celui du dossier téléchargements
-        path.add("C:\\Downloads");
-        this.donnees = new ArrayList<>();
-        this.p= new Parametres();
+        paths.add("C:\\Downloads");
+        this.donnees = new ArrayList();
+        this.extensionsTraites = new ArrayList();
+        this.p = new Parametres();
     }
     
-    public GestionScore(List<String> path) {
-        this.path = path;
-        this.donnees = new ArrayList<>();
-        this.p= new Parametres();
-    }    
-
-    public List<String> getPath() {
-        return path;
+    public GestionScore(ArrayList<String> path) {
+        this.paths = path;
+        this.donnees = new ArrayList();
+        
+        this.extensionsTraites = new ArrayList();
+        //Par défaut on traite l'extension pdf
+        this.extensionsTraites.add(".pdf");
+        this.p = new Parametres();
+    }
+    
+    public GestionScore(ArrayList<String> paths, ArrayList<String> extensionsTraites) {
+        this.paths = paths;
+        this.donnees = new ArrayList();
+        this.extensionsTraites = extensionsTraites;
+        this.p = new Parametres();
     }
 
-    public void setPath(List<String> path) {
-        this.path = path;
+    public List<String> getPaths() {
+        return paths;
+    }
+
+    public void setPaths(List<String> paths) {
+        this.paths = paths;
+
+
     }
 
     public List<Donnee> getDonnees() {
@@ -160,6 +186,50 @@ public class GestionScore {
         s+=p.E*(d.getDateModif()-d.getDateCrea())/(1+p.F*d.getFreqModif());
         s*=(1+p.G*d.getTaille());
         d.setScore(s);
+        
+    }  
+    public List<String> getExtensionsTraites() {
+        return extensionsTraites;
+    }
+
+    public void setExtensionsTraites(List<String> extensionsTraites) {
+        this.extensionsTraites = extensionsTraites;
+    }
+    
+    public String expressionLogiqueExtensionsTraites(){
+        String s = "";
+        for(String elt : this.extensionsTraites){
+            if(!"".equals(s)){
+                s+="|";
+            }
+            s+="[a-zA-Z0-9_.+-]+\\"+elt;
+        }
+        return s;
+    }
+    
+    
+    
+    
+    public void parcours_path(String chemin) throws IOException{
+        boolean bName;
+        File repertoire = new File(chemin);
+        File[] files=repertoire.listFiles();
+        for (File file : files) {
+            String fileName = file.getName();
+            Pattern uName = Pattern.compile(this.expressionLogiqueExtensionsTraites());
+            Matcher mUname = uName.matcher(fileName);
+            bName = mUname.matches();
+            if (bName) {
+                donnees.add(new Donnee(file.getPath()));
+            }
+        }
+    }
+    
+    public void parcours() throws IOException{
+        for(String path : this.paths){
+            parcours_path(path);
+        }
+
     }
     
      /**

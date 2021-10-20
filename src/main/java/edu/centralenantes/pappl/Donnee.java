@@ -5,170 +5,240 @@
  */
 package edu.centralenantes.pappl;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.attribute.FileTime;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import javax.swing.JFileChooser;
+import java.nio.file.Paths;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+
 /**
  *
- * @author Boulanger
+ * @author asjou
  */
-public class Donnee implements Comparable<Donnee>  {
-    private String nom; // Nom du Fichier
-    private String path; // Path du fichier
-    private String extension; // Extension du fichier (pdf, png,..)
-    private long dateCrea; // date de creation du fichier
-    private long dateOuvert; // date de dernière ouverture du fichier
-    private long dateModif; // date de dernière modif du fichier
-    private int freqModif; // fréquence de modif du fichier
-    private int freqOuvert; // fréquence d'ouverture du fichier
-    private int nbNom; // nombre de fois que le Nom est "répété"
-    private long taille; // taille du fichier en byte
-    private double score; // score total du fichier
+public class GestionScore {
 
-    public long getDateModif() {
-        return dateModif;
-    }
-
-    public void setDateModif(long dateModif) {
-        this.dateModif = dateModif;
-    }
+    private List<String> paths;
+    private List<Donnee> donnees;
+    private Parametres p;
     
-    
-    public String getNom() {
-        return nom;
-    }
+    class Parametres{
+        public double A,B,C,D,E,F,G;
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getExtension() {
-        return extension;
-    }
-
-    public void setExtension(String extension) {
-        this.extension = extension;
-    }
-
-    public long getDateCrea() {
-        return dateCrea;
-    }
-
-    public void setDateCrea(long dateCrea) {
-        this.dateCrea = dateCrea;
-    }
-
-    public long getDateOuvert() {
-        return dateOuvert;
-    }
-
-    public void setDateOuvert(long dateOuvert) {
-        this.dateOuvert = dateOuvert;
-    }
-
-    public int getFreqModif() {
-        return freqModif;
-    }
-
-    public void setFreqModif(int freqModif) {
-        this.freqModif = freqModif;
-    }
-
-    public int getFreqOuvert() {
-        return freqOuvert;
-    }
-
-    public void setFreqOuvert(int freqOuvert) {
-        this.freqOuvert = freqOuvert;
-    }
-
-    public int getNbNom() {
-        return nbNom;
-    }
-
-    public void setNbNom(int nbNom) {
-        this.nbNom = nbNom;
-    }
-
-    public long getTaille() {
-        return taille;
-    }
-
-    public void setTaille(long taille) {
-        this.taille = taille;
-    }
-
-    public double getScore() {
-        return score;
-    }
-
-    public void setScore(double score) {
-        this.score = score;
-    }
-    
-    /*
-    * Constructeur de la Classe Donnee créant une Donnee à partir d'un path lié à un vrai fichier
-    */
-    public Donnee(String _path) throws IOException {
-        this.path=_path;
-        File file= new File(path);
-        BasicFileAttributes attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
-        this.nom=file.getName();
-        this.dateModif=attr.lastModifiedTime().toMillis();
-        this.dateCrea=attr.creationTime().toMillis();
-        this.dateOuvert=attr.lastAccessTime().toMillis();
-        this.taille= attr.size();
-        int pos = path.lastIndexOf(".");// On recherhce le dernier . dans le fichierqui va correspondre au début de l'extension
-        if (pos > -1) {
-            this.extension=path.substring(pos);// On supprime tous les éléments du String précédent le point trouvé
+        public void setA(double A) {
+            this.A = A;
         }
-        else{
-            this.extension=null;
-        }
-        this.nbNom=0;
-        this.freqModif=0;
-        this.freqOuvert=0;
-        this.score=0;
-    }
-    /*
-    * Méthode affichant toutes les données d'un fichier correspondant à une Donnee
-    */
-    public void afficheDonnee(){
-        Date d= new Date();
-        System.out.println("Nom: " +this.nom);
-        System.out.println("Taille: "+ this.taille +" Octets");
-        System.out.println("Path: " +this.path);
-        System.out.println("Extension: " +this.extension);
-        System.out.println("Date de creation: " +(d.getTime()-this.dateCrea));
-        System.out.println("Date de derniere modification: " +(d.getTime()-this.dateModif));
-        System.out.println("Date de derniere ouverture: "+ (d.getTime()-this.dateOuvert));
-        System.out.println("Reiteration du nom: " +this.nbNom);
-        System.out.println("Frequence de modification: "+ this.freqModif );
-        System.out.println("Frequence d'ouverture: "+ this.freqOuvert );
-        System.out.println("Score: "+ this.score);
 
+        public void setB(double B) {
+            this.B = B;
+        }
+
+        public void setC(double C) {
+            this.C = C;
+        }
+
+        public void setD(double D) {
+            this.D = D;
+        }
+
+        public void setE(double E) {
+            this.E = E;
+        }
+
+        public void setF(double F) {
+            this.F = F;
+        }
+
+        public void setG(double G) {
+            this.G = G;
+        }
+
+
+        public Parametres() {
+            A=1.0e-8;
+            B=0;
+            C=1.0e-15;
+            D=1;
+            E=1.0e-10;
+            F=1.0e-10;
+            G=1.0e-3;
+        }
+        
+        
+
+    }
+    
+    
+
+    private List<String> extensionsTraites;
+    
+    public GestionScore() {
+        this.paths = new ArrayList();
+        //Le chemin par défaut est celui du dossier téléchargements
+        paths.add("C:\\Downloads");
+        this.donnees = new ArrayList();
+        this.extensionsTraites = new ArrayList();
+        this.p = new Parametres();
+    }
+    
+    public GestionScore(ArrayList<String> path) {
+        this.paths = path;
+        this.donnees = new ArrayList();
+        
+        this.extensionsTraites = new ArrayList();
+        //Par défaut on traite l'extension pdf
+        this.extensionsTraites.add(".pdf");
+        this.p = new Parametres();
+    }
+    
+    public GestionScore(ArrayList<String> paths, ArrayList<String> extensionsTraites) {
+        this.paths = paths;
+        this.donnees = new ArrayList();
+        this.extensionsTraites = extensionsTraites;
+        this.p = new Parametres();
+    }
+
+    public List<String> getPaths() {
+        return paths;
+    }
+
+    public void setPaths(List<String> paths) {
+        this.paths = paths;
+
+
+    }
+
+    public List<Donnee> getDonnees() {
+        return donnees;
+    }
+
+    public void setDonnees(List<Donnee> donnees) {
+        this.donnees = donnees;
+    }
+
+    
+    public void ajoutDonnee(String path) throws IOException{
+        Donnee d = new Donnee(path);
+        donnees.add(d);
+    }
+    
+    /** 
+     * Méthode calculant le Score d'une Donnee en appelant d'autres fonctions pour les calculs
+     * @param d 
+     * @param i 
+     */
+    public void calculScore(Donnee d, int i){
+        switch(i){
+            case(1)->{
+                calculScore1(d);// Calcul linéaire dépendant uniquement de la date création et derniere ouverture
+            }
+            case(2)->{
+                calculScore2(d);
+            }
+            case(3)->{
+                calculScore3(d);
+            }
+            case(4)->{
+                calculScore4(d);
+            }
+        }
+        
+    }
+    
+    /**
+     * Méthode qui va trier les différentes Données de la liste en fonction de leur score
+     */
+    public void triScore(){
+        Collections.sort(this.donnees);
+    }
+    
+    /**
+     * Premiere méthode de calcul du score d'un fichier en se concentrant uniquement sur la date de derniere ouverture (linéaire)
+     * @param d 
+     */
+    public void calculScore1(Donnee d){
+        double s=0;
+        s=p.A*(d.getDateOuvert()-d.getDateCrea())/(1+p.D*d.getFreqOuvert());
+        d.setScore(s);
     }
     /**
-     * Méthode permettant de comparer une Donnée avec une autre en utilisant leur score
-     * @param d
-     * @return 
+     * Deuxième méthode de calcul du score d'un fichier en se concentrant uniquement sur la date de derniere ouverture (exponentielle)
+     * @param d 
      */
-    @Override
-    public int compareTo(Donnee d){
-        return (int)(this.score - d.getScore());
+    public void calculScore2(Donnee d){
+        double s =0;
+        s=p.A*Math.exp(p.B+p.C*((d.getDateOuvert()-d.getDateCrea())/(1+p.D*d.getFreqOuvert())));
+        d.setScore((float)s);
     }
     
+    /**
+     * Troisième méthode de calcul de score d'un fichier en se concentrant sur: ouverture, modification, taille (linéaire)
+     * @param d 
+     */
+    public void calculScore3(Donnee d){
+        double s=0;
+        s=p.A*(d.getDateOuvert()-d.getDateCrea())/(1+p.D*d.getFreqOuvert());
+        s+=p.E*(d.getDateModif()-d.getDateCrea())/(1+p.F*d.getFreqModif());
+        s*=(1+p.G*d.getTaille());
+        d.setScore(s);
+    public List<String> getExtensionsTraites() {
+        return extensionsTraites;
+    }
+
+    public void setExtensionsTraites(List<String> extensionsTraites) {
+        this.extensionsTraites = extensionsTraites;
+    }
+    
+    public String expressionLogiqueExtensionsTraites(){
+        String s = "";
+        for(String elt : this.extensionsTraites){
+            if(!"".equals(s)){
+                s+="|";
+            }
+            s+="[a-zA-Z0-9_.+-]+\\"+elt;
+        }
+        return s;
+    }
+    
+    
+    
+    public void ajoutDonnee(String path) throws IOException{
+        Donnee d = new Donnee(path);
+        donnees.add(d);
+    }
+    
+    public void parcours_path(String chemin) throws IOException{
+        boolean bName;
+        File repertoire = new File(chemin);
+        File[] files=repertoire.listFiles();
+        for (File file : files) {
+            String fileName = file.getName();
+            Pattern uName = Pattern.compile(this.expressionLogiqueExtensionsTraites());
+            Matcher mUname = uName.matcher(fileName);
+            bName = mUname.matches();
+            if (bName) {
+                donnees.add(new Donnee(file.getPath()));
+            }
+        }
+    }
+    
+    public void parcours() throws IOException{
+        for(String path : this.paths){
+            parcours_path(path);
+        }
+
+    }
+    
+     /**
+     * Troisième méthode de calcul de score d'un fichier en se concentrant sur: ouverture, modification, taille (linéaire)
+     * @param d 
+     */
+    public void calculScore4(Donnee d){
+        
+    }
 }
