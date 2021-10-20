@@ -5,6 +5,7 @@
  */
 package edu.centralenantes.pappl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class GestionScore {
         this.path = new ArrayList<String>();
         //Le chemin par défaut est celui du dossier téléchargements
         path.add("C:\\Downloads");
+        this.donnees = new ArrayList<Donnee>();
     }
     
     public GestionScore(List<String> path) {
@@ -33,6 +35,17 @@ public class GestionScore {
     public void setPath(List<String> path) {
         this.path = path;
     }
+
+    public List<Donnee> getDonnees() {
+        return donnees;
+    }
+
+    public void setDonnees(List<Donnee> donnees) {
+        this.donnees = donnees;
+    }
     
-    
+    public void ajoutDonnee(String path) throws IOException{
+        Donnee d = new Donnee(path);
+        donnees.add(d);
+    }
 }
