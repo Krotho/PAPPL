@@ -99,7 +99,6 @@ public class GestionScore {
             Matcher mUname = uName.matcher(fileName);
             bName = mUname.matches();
             if (bName) {
-                System.out.println(mUname.group());
                 donnees.add(new Donnee(file.getPath()));
             }
         }
