@@ -83,6 +83,7 @@ public class GestionScore {
         paths.add("C:\\Downloads");
         this.donnees = new ArrayList();
         this.extensionsTraites = new ArrayList();
+        this.p = new Parametres();
     }
     
     public GestionScore(ArrayList<String> path) {
@@ -92,12 +93,14 @@ public class GestionScore {
         this.extensionsTraites = new ArrayList();
         //Par défaut on traite l'extension pdf
         this.extensionsTraites.add(".pdf");
+        this.p = new Parametres();
     }
     
     public GestionScore(ArrayList<String> paths, ArrayList<String> extensionsTraites) {
         this.paths = paths;
         this.donnees = new ArrayList();
         this.extensionsTraites = extensionsTraites;
+        this.p = new Parametres();
     }
 
     public List<String> getPaths() {
