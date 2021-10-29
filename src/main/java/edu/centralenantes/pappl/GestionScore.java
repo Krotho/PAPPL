@@ -23,10 +23,10 @@ import java.util.regex.Pattern;
  */
 public class GestionScore {
 
-    private List<String> paths;
-    private List<Donnee> donnees;
-    private Parametres p;
-    private List<String> extensionsTraites;
+    private List<String> paths; //Liste des paths à traiter
+    private List<Donnee> donnees; //Liste des données des fichiers trouvés
+    private Parametres p; //Paramètres pour les calculs de scores
+    private List<String> extensionsTraites; //Liste des extensions que l'on va traiter
     
     class Parametres{
         public double A,B,C,D,E,F,G;
@@ -74,10 +74,9 @@ public class GestionScore {
 
     }
     
-    
-
-    
-    
+    /**
+     *
+     */
     public GestionScore() {
         this.paths = new ArrayList();
         //Le chemin par défaut est celui du dossier téléchargements
@@ -88,6 +87,10 @@ public class GestionScore {
 
     }
     
+    /**
+     *
+     * @param path
+     */
     public GestionScore(ArrayList<String> path) {
         this.paths = path;
         this.donnees = new ArrayList();
@@ -98,6 +101,11 @@ public class GestionScore {
         this.p = new Parametres();
     }
     
+    /**
+     *
+     * @param paths
+     * @param extensionsTraites
+     */
     public GestionScore(ArrayList<String> paths, ArrayList<String> extensionsTraites) {
         this.paths = paths;
         this.donnees = new ArrayList();
@@ -105,25 +113,45 @@ public class GestionScore {
         this.p = new Parametres();
     }
 
+    /**
+     *
+     * @return
+     */
     public List<String> getPaths() {
         return paths;
     }
 
+    /**
+     *
+     * @param paths
+     */
     public void setPaths(List<String> paths) {
         this.paths = paths;
 
 
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Donnee> getDonnees() {
         return donnees;
     }
 
+    /**
+     *
+     * @param donnees
+     */
     public void setDonnees(List<Donnee> donnees) {
         this.donnees = donnees;
     }
 
-    
+    /**
+     *
+     * @param path
+     * @throws IOException
+     */
     public void ajoutDonnee(String path) throws IOException{
         Donnee d = new Donnee(path);
         donnees.add(d);
@@ -190,45 +218,90 @@ public class GestionScore {
         d.setScore(s);     
     }  
 
+    /**
+     *
+     * @return
+     */
     public List<String> getExtensionsTraites() {
         return extensionsTraites;
     }
 
+    /**
+     *
+     * @param extensionsTraites
+     */
     public void setExtensionsTraites(List<String> extensionsTraites) {
         this.extensionsTraites = extensionsTraites;
     }
     
+    /**
+     * Méthode qui renvoie l'expression logique associée à une extension de la forme ".ext" OU "ext"
+     * @return
+     */
     public String expressionLogiqueExtensionsTraites(){
         String s = "";
         for(String elt : this.extensionsTraites){
             if(!"".equals(s)){
                 s+="|";
             }
-            s+="[a-zA-Z0-9_.+-]+\\"+elt;
+                s+="\\b.*"+elt+"\\b";
         }
         return s;
     }
     
+    /**
+     * Méthode qui vérifie si la liste de l'attribut nommé donnees contient un fichier se trouvant à un path donné
+     * @param path
+     * @return
+     */
+    public boolean isInDonnees(String path){
+        for (Donnee d : this.donnees){
+            if(d.isEqual(path)){
+                return true;
+            }
+        }
+        return false;
+    }
     
-    
-
-
-    
+    /**
+     *  Méthode qui parcourt un chemin et ses sous-dossiers si il y en a en ajoutant à la liste des données tous les fichiers de la forme adaptée
+     * @param chemin
+     * @throws IOException
+     */
     public void parcours_path(String chemin) throws IOException{
         boolean bName;
         File repertoire = new File(chemin);
-        File[] files=repertoire.listFiles();
+        File[] files;
+        if(repertoire.isDirectory()){
+            files=repertoire.listFiles();
+        }
+        else {
+            if(repertoire.exists()){
+                files = new File[]{repertoire};
+            }
+            else{
+                System.out.println("Le chemin "+repertoire.getPath()+" n'existe pas.");
+                files = new File[]{};
+            }
+        }
         for (File file : files) {
             String fileName = file.getName();
             Pattern uName = Pattern.compile(this.expressionLogiqueExtensionsTraites());
             Matcher mUname = uName.matcher(fileName);
             bName = mUname.matches();
-            if (bName) {
+            if (bName && !this.isInDonnees(file.getPath())) {
                 donnees.add(new Donnee(file.getPath()));
+            }
+            if(file.isDirectory()){
+                parcours_path(file.getPath());
             }
         }
     }
     
+    /**
+     * Parcours de l'ensemble des chemins rentrés dans l'attribut paths
+     * @throws IOException
+     */
     public void parcours() throws IOException{
         for(String path : this.paths){
             parcours_path(path);

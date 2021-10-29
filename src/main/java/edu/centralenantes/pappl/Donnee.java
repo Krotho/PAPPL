@@ -143,7 +143,7 @@ public class Donnee implements Comparable<Donnee>  {
         this.freqOuvert=0;
         this.score=0;
     }
-    /*
+    /**
     * Méthode affichant toutes les données d'un fichier correspondant à une Donnee
     */
     public void afficheDonnee(){
@@ -171,4 +171,12 @@ public class Donnee implements Comparable<Donnee>  {
         return (int)(this.score - d.getScore());
     }
     
+    /**
+     * Compare le path de la donnée avec un path entré en String
+     * @param path
+     * @return
+     */
+    public boolean isEqual(String path){
+        return (this.path.equals(path));
+    }
 }

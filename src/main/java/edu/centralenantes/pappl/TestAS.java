@@ -5,6 +5,7 @@
  */
 package edu.centralenantes.pappl;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 /**
@@ -12,15 +13,24 @@ import java.util.ArrayList;
  * @author asjou
  */
 public class TestAS {
+
+    /**
+     *
+     * @param arg
+     * @throws IOException
+     */
     public static void main(String[] arg) throws IOException{        
         ArrayList<String> path = new ArrayList<>();
         path.add("C:\\Users\\asjou\\Downloads");
-//        ArrayList<String> ext = new ArrayList<>();
-//        ext.add(".pdf");
-        GestionScore gS = new GestionScore(path);
+        //path.add("C:\\Users\\asjou\\Downloads\\Einreiseanmeldung.pdf");
+        path.add("C:\\Users\\asjou\\Downloads\\TP1\\Interaction TP1.pdf");
+        ArrayList<String> ext = new ArrayList<>();
+        ext.add(".pdf");
+//        ext.add("png");
+        GestionScore gS = new GestionScore(path,ext);
         gS.parcours();
-        for (Donnee d : gS.getDonnees()){
-            d.afficheDonnee();
-        }
+        gS.getDonnees().forEach(d -> {
+            System.out.println(d.getPath());
+        });
     }
 }
