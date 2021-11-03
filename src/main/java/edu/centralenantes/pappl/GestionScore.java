@@ -132,10 +132,18 @@ public class GestionScore {
         this.paths = paths;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<String> getIgnoredPaths() {
         return ignoredPaths;
     }
 
+    /**
+     *
+     * @param ignoredPaths
+     */
     public void setIgnoredPaths(List<String> ignoredPaths) {
         this.ignoredPaths = ignoredPaths;
     }
