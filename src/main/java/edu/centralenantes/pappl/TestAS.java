@@ -22,12 +22,15 @@ public class TestAS {
     public static void main(String[] arg) throws IOException{        
         ArrayList<String> path = new ArrayList<>();
         path.add("C:\\Users\\asjou\\Downloads");
-        //path.add("C:\\Users\\asjou\\Downloads\\Einreiseanmeldung.pdf");
-        path.add("C:\\Users\\asjou\\Downloads\\TP1\\Interaction TP1.pdf");
+        //path.add("C:\\Users\\asjou\\Downloads\\TP1\\Interaction TP1.pdf");
         ArrayList<String> ext = new ArrayList<>();
         ext.add(".pdf");
 //        ext.add("png");
         GestionScore gS = new GestionScore(path,ext);
+        ArrayList<String> pathInterdit = new ArrayList<>();
+        pathInterdit.add("C:\\Users\\asjou\\Downloads\\TP1\\Interaction TP1.pdf");
+        pathInterdit.add("C:\\Users\\asjou\\Downloads\\Diego libre dans sa tête");
+        gS.setIgnoredPaths(pathInterdit);
         gS.parcours();
         gS.getDonnees().forEach(d -> {
             System.out.println(d.getPath());

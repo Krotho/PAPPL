@@ -24,6 +24,7 @@ import java.util.regex.Pattern;
 public class GestionScore {
 
     private List<String> paths; //Liste des paths à traiter
+    private List<String> ignoredPaths; //Liste des paths à ignorer, qu'il s'agisse de dossiers ou de fichiers
     private List<Donnee> donnees; //Liste des données des fichiers trouvés
     private Parametres p; //Paramètres pour les calculs de scores
     private List<String> extensionsTraites; //Liste des extensions que l'on va traiter
@@ -84,7 +85,7 @@ public class GestionScore {
         this.donnees = new ArrayList();
         this.extensionsTraites = new ArrayList();
         this.p = new Parametres();
-
+        this.ignoredPaths = new ArrayList();
     }
     
     /**
@@ -99,6 +100,7 @@ public class GestionScore {
         //Par défaut on traite l'extension pdf
         this.extensionsTraites.add(".pdf");
         this.p = new Parametres();
+        this.ignoredPaths = new ArrayList();
     }
     
     /**
@@ -111,6 +113,7 @@ public class GestionScore {
         this.donnees = new ArrayList();
         this.extensionsTraites = extensionsTraites;
         this.p = new Parametres();
+        this.ignoredPaths = new ArrayList();
     }
 
     /**
@@ -127,10 +130,27 @@ public class GestionScore {
      */
     public void setPaths(List<String> paths) {
         this.paths = paths;
-
-
     }
 
+    public List<String> getIgnoredPaths() {
+        return ignoredPaths;
+    }
+
+    public void setIgnoredPaths(List<String> ignoredPaths) {
+        this.ignoredPaths = ignoredPaths;
+    }
+
+    public Parametres getP() {
+        return p;
+    }
+
+    public void setP(Parametres p) {
+        this.p = p;
+    }
+    
+    
+    
+    
     /**
      *
      * @return
@@ -272,6 +292,9 @@ public class GestionScore {
         boolean bName;
         File repertoire = new File(chemin);
         File[] files;
+        if(this.ignoredPaths.contains(repertoire.getPath())){
+            return;
+        }
         if(repertoire.isDirectory()){
             files=repertoire.listFiles();
         }
@@ -289,7 +312,7 @@ public class GestionScore {
             Pattern uName = Pattern.compile(this.expressionLogiqueExtensionsTraites());
             Matcher mUname = uName.matcher(fileName);
             bName = mUname.matches();
-            if (bName && !this.isInDonnees(file.getPath())) {
+            if (bName && !this.isInDonnees(file.getPath()) &&!(this.ignoredPaths.contains(file.getPath()))) {
                 donnees.add(new Donnee(file.getPath()));
             }
             if(file.isDirectory()){
@@ -306,8 +329,8 @@ public class GestionScore {
         for(String path : this.paths){
             parcours_path(path);
         }
-
     }
+    
     
      /**
      * Troisième méthode de calcul de score d'un fichier en se concentrant sur: ouverture, modification, taille (linéaire)
