@@ -6,6 +6,7 @@
 package edu.centralenantes.pappl;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Date;
 
 /**
@@ -13,13 +14,19 @@ import java.util.Date;
  * @author Boulanger
  */
 public class Test {
-    public static void main(String[] arg) throws IOException{
-        Donnee D= new Donnee("C:\\Users\\Boulanger\\Downloads\\Validation de l'international.pdf");
+    public static void main(String[] arg) throws IOException, URISyntaxException{
+        /*
+        Donnee D= new Donnee("D:\\Program Files\\Info\\NETBEANS\\PAPPL\\pom.xml");
         D.afficheDonnee();
         GestionScore gS = new GestionScore();
         for(int i =1;i<5;i++){
             gS.calculScore(D, i);
             System.out.println(D.getScore());
         }
+        */
+        
+        Interface I = new Interface(150);
+        I.gestionInterface();
+        
     }
 }
