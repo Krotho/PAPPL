@@ -60,7 +60,6 @@ TODO
 
 TODO
 
-###
+### Message d'erreur et problèmes connus
 
-Message d'erreur et problèmes connus
-
+TODO
