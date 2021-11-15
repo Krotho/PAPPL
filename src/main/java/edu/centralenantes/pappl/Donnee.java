@@ -148,15 +148,15 @@ public class Donnee implements Comparable<Donnee>  {
     public Donnee(ArrayList<String> s) throws IOException {
         this.path=s.get(0);
         this.nom=s.get(1);
-        this.dateModif=Integer.parseInt(s.get(2));
-        this.dateCrea=Integer.parseInt(s.get(3));
-        this.dateOuvert=Integer.parseInt(s.get(4));
-        this.taille= Integer.parseInt(s.get(5));
+        this.dateModif=Long.parseLong(s.get(2));
+        this.dateCrea=Long.parseLong(s.get(3));
+        this.dateOuvert=Long.parseLong(s.get(4));
+        this.taille= Long.parseLong(s.get(5));
         this.extension=s.get(6);
         this.nbNom=Integer.parseInt(s.get(7));
         this.freqModif=Integer.parseInt(s.get(8));
         this.freqOuvert=Integer.parseInt(s.get(9));
-        this.score=Integer.parseInt(s.get(10));
+        this.score=Double.parseDouble(s.get(10));
     }
     
     /**

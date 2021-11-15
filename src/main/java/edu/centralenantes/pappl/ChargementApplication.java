@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.InvalidPathException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
@@ -20,15 +21,24 @@ public class ChargementApplication {
     private String path;
     private BufferedReader bf;
 
+    /**
+     * 
+     * @param path
+     */
     public ChargementApplication(String path) {
         this.path = path;
     }
     
+    /**
+     * Méthode à lancer pour récupérer les données de lancement précédents
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public void chargerApplication() throws FileNotFoundException, IOException{
         FileReader fr = new FileReader(path);
         bf = new BufferedReader(fr);
         String line = bf.readLine();// On récupère la ligne 1 (pallier interface)
-        StringTokenizer sT = new StringTokenizer(line, " ;");
+        StringTokenizer sT = new StringTokenizer(line, ";");
         sT.nextToken(); //On supprime "Interface"
         String mot = sT.nextToken(); //On récupère le pallier
         Interface.pallier=Integer.parseInt(mot); //On crée le pallier de l'interface
@@ -38,7 +48,7 @@ public class ChargementApplication {
         Interface.gScore = new GestionScore();
         //Recuperation de paths
         line=bf.readLine();
-        sT = new StringTokenizer(line, " ;");
+        sT = new StringTokenizer(line, ";");
         ArrayList<String> listeMots = new ArrayList(); //Liste vide pour stockage
         sT.nextToken(); //On supprime le "paths"
         while(sT.hasMoreTokens()) {
@@ -48,7 +58,7 @@ public class ChargementApplication {
         
         //Recuperation ignoredPaths
         line=bf.readLine();
-        sT = new StringTokenizer(line, " ;");
+        sT = new StringTokenizer(line, ";");
         listeMots = new ArrayList(); //Recréation liste vide
         sT.nextToken(); //On supprime le "ignoredPaths"
         while(sT.hasMoreTokens()) {
@@ -58,7 +68,7 @@ public class ChargementApplication {
         
         //Recuperation extensionsTraites
         line=bf.readLine();
-        sT = new StringTokenizer(line, " ;");
+        sT = new StringTokenizer(line, ";");
         listeMots = new ArrayList(); //Recréation liste vide
         sT.nextToken(); //On supprime le "extensionsTraites"
         while(sT.hasMoreTokens()) {
@@ -68,7 +78,7 @@ public class ChargementApplication {
         
         //Recuperation Parametres
         line=bf.readLine();
-        sT = new StringTokenizer(line, " ;");
+        sT = new StringTokenizer(line, ";");
         listeMots = new ArrayList(); //Recréation liste vide
         sT.nextToken(); //On supprime le "Parametres"
         while(sT.hasMoreTokens()) {
@@ -83,7 +93,7 @@ public class ChargementApplication {
         while(line!=null){
             // On va séparer les caracts de chaque ligne
             
-            sT = new StringTokenizer(line, " ;");
+            sT = new StringTokenizer(line, ";");
             listeMots= new ArrayList();
             sT.nextToken(); //On supprime le "Donnee"
             while(sT.hasMoreTokens()) {
@@ -112,6 +122,9 @@ public class ChargementApplication {
                 Interface.gScore.ajoutDonnee(newDonnee);
             }
             catch (IOException exception){
+                System.out.println("exDonnee " + exDonnee.getNom() + " non trouvée au path " + exDonnee.getPath());
+            }
+            catch (InvalidPathException exception){
                 System.out.println("exDonnee " + exDonnee.getNom() + " non trouvée au path " + exDonnee.getPath());
             }
             line= bf.readLine();

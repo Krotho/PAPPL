@@ -22,18 +22,35 @@ import java.util.Set;
  * @author Boulanger
  */
 public class Interface {
+
+    /**
+     * Gestion de score qu'on relie à l'interface par une variable statique
+     */
     public static GestionScore gScore;
+
+    /**
+     * Pallier pour le choix des scores trop hauts
+     */
     public static int pallier;
     
+    /**
+     * Choix de la méthode de calcul de score qu'on emploie
+     */
     public static int choixScore;
     
-    
+    /**
+     *
+     * @param _pallier
+     */
     public Interface(int _pallier){
-        this.pallier=_pallier;
-        this.gScore = new GestionScore();
+        Interface.pallier=_pallier;
+        Interface.gScore = new GestionScore();
+        Interface.choixScore = 1;
     }
     /**
      * Cette fonction va gérer l'interface dans sa globalité avec les demande à l'utilisateur et les résultats
+     * @throws java.io.IOException
+     * @throws java.net.URISyntaxException
      */
     public void gestionInterface() throws IOException, URISyntaxException{
         //On commence par demande à l'utilisateur les chemins d'accès qu'il veut
@@ -48,7 +65,9 @@ public class Interface {
         input =sc.nextLine();
         paths.add(input);
         */
-        paths.add("C:\\Users\\Boulanger\\Downloads");
+        //paths.add("C:\\Users\\Boulanger\\Downloads");
+        paths.add("C:\\Users\\asjou\\Downloads");
+        paths.add("C:\\Users\\asjou\\Documents\\Documents");
         gScore.setPaths(paths);
         
         
@@ -57,7 +76,7 @@ public class Interface {
         gScore.parcours();
         
         //On calcul le score de chaque donnee
-        gScore.calculScore(1);
+        gScore.calculScore(choixScore);
     
         //On tri ensuite la liste
         

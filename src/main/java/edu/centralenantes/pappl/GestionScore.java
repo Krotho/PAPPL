@@ -328,7 +328,7 @@ public class GestionScore {
     public void parcours_path(String chemin) throws IOException{
         boolean bName;
         File repertoire = new File(chemin);
-        File[] files;
+        File[] files = new File[]{};
         if(this.ignoredPaths.contains(repertoire.getPath())){
             return;
         }
