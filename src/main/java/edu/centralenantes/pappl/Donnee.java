@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JFileChooser;
 /**
@@ -143,6 +144,21 @@ public class Donnee implements Comparable<Donnee>  {
         this.freqOuvert=0;
         this.score=0;
     }
+    
+    public Donnee(ArrayList<String> s) throws IOException {
+        this.path=s.get(0);
+        this.nom=s.get(1);
+        this.dateModif=Integer.parseInt(s.get(2));
+        this.dateCrea=Integer.parseInt(s.get(3));
+        this.dateOuvert=Integer.parseInt(s.get(4));
+        this.taille= Integer.parseInt(s.get(5));
+        this.extension=s.get(6);
+        this.nbNom=Integer.parseInt(s.get(7));
+        this.freqModif=Integer.parseInt(s.get(8));
+        this.freqOuvert=Integer.parseInt(s.get(9));
+        this.score=Integer.parseInt(s.get(10));
+    }
+    
     /**
     * Méthode affichant toutes les données d'un fichier correspondant à une Donnee
     */

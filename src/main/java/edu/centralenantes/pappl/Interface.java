@@ -22,8 +22,10 @@ import java.util.Set;
  * @author Boulanger
  */
 public class Interface {
-    GestionScore gScore;
-    int pallier;
+    public static GestionScore gScore;
+    public static int pallier;
+    
+    public static int choixScore;
     
     
     public Interface(int _pallier){

@@ -69,8 +69,18 @@ public class GestionScore {
             G=1.0e-3;
         }
         
-        
-
+        public Parametres(ArrayList<String> s){
+            this();
+            if(s.size()>6){
+                A=s.indexOf(0);
+                B=s.indexOf(1);
+                C=s.indexOf(2);
+                D=s.indexOf(3);
+                E=s.indexOf(4);
+                F=s.indexOf(5);
+                G=s.indexOf(6);
+            }
+        }
     }
     
     /**
@@ -155,7 +165,17 @@ public class GestionScore {
         this.p = p;
     }
     
-    
+    public void setP(ArrayList<String> s){
+        if(s.size()>6){
+            p.setA(s.indexOf(0));
+            p.setB(s.indexOf(1));
+            p.setC(s.indexOf(2));
+            p.setD(s.indexOf(3));
+            p.setE(s.indexOf(4));
+            p.setF(s.indexOf(5));
+            p.setG(s.indexOf(6));
+        }
+    }
     
     
     /**
@@ -183,6 +203,11 @@ public class GestionScore {
         Donnee d = new Donnee(path);
         donnees.add(d);
     }
+    
+    public void ajoutDonnee(Donnee d){
+        donnees.add(d);
+    }
+    
     public void calculScore(int i){
         for(Donnee D : donnees){
             calculScore(D,i);
