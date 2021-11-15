@@ -22,10 +22,12 @@ import java.util.Set;
  * @author Boulanger
  */
 public class Interface {
-    GestionScore gScore;
-    int pallier;
+    public GestionScore gScore;
+    public int pallier;
     
-    
+    public GestionScore getGestionScore(){
+        return this.gScore;
+    }
     public Interface(int _pallier){
         this.pallier=_pallier;
         this.gScore = new GestionScore();
@@ -60,6 +62,7 @@ public class Interface {
         //On tri ensuite la liste
         
         gScore.triScore();
+        /*
         
         //Maintenant, on va afficher tous les fichiers ayant un score supérieur au pallier
         
@@ -78,7 +81,8 @@ public class Interface {
         }
         
         
-        //
+        //Archivage d'un fichier 
+        
         System.out.println("Voulez vous archiver un fichier de la liste?");
         input=sc.nextLine();
         while("O".equals(input)){
@@ -109,7 +113,7 @@ public class Interface {
             System.out.println("Voulez vous archiver un fichier de la liste?");
             input =sc.nextLine();
         }
-        
+        */
     
         
     }

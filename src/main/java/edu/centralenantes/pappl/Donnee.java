@@ -7,6 +7,8 @@ package edu.centralenantes.pappl;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
@@ -178,5 +180,15 @@ public class Donnee implements Comparable<Donnee>  {
      */
     public boolean isEqual(String path){
         return (this.path.equals(path));
-    }  
+    } 
+    /**
+     * Override de la méthode toString afin de pouvoir afficher une donnée dans l'interface graphique
+     * @return 
+     */
+    @Override
+    public String toString(){
+        BigDecimal bd = new BigDecimal(String.valueOf(this.getScore()));
+        BigDecimal rounded = bd.setScale(2,RoundingMode.FLOOR);
+        return rounded+"   " + this.getNom()+"   "+this.getPath();
+    }
 }
