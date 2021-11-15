@@ -29,7 +29,7 @@ public class ChargementApplication {
         bf = new BufferedReader(fr);
         String line = bf.readLine();// On récupère la ligne 1 (pallier interface)
         StringTokenizer sT = new StringTokenizer(line, " ;");
-        sT.nextToken();
+        sT.nextToken(); //On supprime "Interface"
         String mot = sT.nextToken(); //On récupère le pallier
         Interface.pallier=Integer.parseInt(mot); //On crée le pallier de l'interface
         Interface.choixScore=Integer.parseInt(sT.nextToken()); //On enregistre le choix du score
@@ -85,6 +85,7 @@ public class ChargementApplication {
             
             sT = new StringTokenizer(line, " ;");
             listeMots= new ArrayList();
+            sT.nextToken(); //On supprime le "Donnee"
             while(sT.hasMoreTokens()) {
                 listeMots.add(sT.nextToken()); // On crée une liste de mots contenant toutes les infos d'une ancienne donnee
             }
