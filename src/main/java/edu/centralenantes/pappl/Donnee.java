@@ -178,5 +178,5 @@ public class Donnee implements Comparable<Donnee>  {
      */
     public boolean isEqual(String path){
         return (this.path.equals(path));
-    }
+    }  
 }

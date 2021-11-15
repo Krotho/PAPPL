@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.Collections;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -81,9 +79,10 @@ public class GestionScore {
     public GestionScore() {
         this.paths = new ArrayList();
         //Le chemin par défaut est celui du dossier téléchargements
-        paths.add("C:\\Downloads");
+        paths.add("C:\\Users\\Boulanger\\Downloads");
         this.donnees = new ArrayList();
         this.extensionsTraites = new ArrayList();
+        this.extensionsTraites.add(".pdf");
         this.p = new Parametres();
         this.ignoredPaths = new ArrayList();
     }
@@ -184,7 +183,11 @@ public class GestionScore {
         Donnee d = new Donnee(path);
         donnees.add(d);
     }
-    
+    public void calculScore(int i){
+        for(Donnee D : donnees){
+            calculScore(D,i);
+        }
+    }
     /** 
      * Méthode calculant le Score d'une Donnee en appelant d'autres fonctions pour les calculs
      * @param d 
@@ -223,6 +226,7 @@ public class GestionScore {
         double s=0;
         s=p.A*(d.getDateOuvert()-d.getDateCrea())/(1+p.D*d.getFreqOuvert());
         d.setScore(s);
+        //System.out.println(d.getScore());
     }
     /**
      * Deuxième méthode de calcul du score d'un fichier en se concentrant uniquement sur la date de derniere ouverture (exponentielle)
@@ -317,11 +321,13 @@ public class GestionScore {
         }
         for (File file : files) {
             String fileName = file.getName();
+            //System.out.println(fileName);
             Pattern uName = Pattern.compile(this.expressionLogiqueExtensionsTraites());
             Matcher mUname = uName.matcher(fileName);
             bName = mUname.matches();
             if (bName && !this.isInDonnees(file.getPath()) &&!(this.ignoredPaths.contains(file.getPath()))) {
                 donnees.add(new Donnee(file.getPath()));
+                //donnees.get(0).afficheDonnee();
             }
             if(file.isDirectory()){
                 parcours_path(file.getPath());
@@ -341,10 +347,25 @@ public class GestionScore {
     
     
      /**
-     * Troisième méthode de calcul de score d'un fichier en se concentrant sur: ouverture, modification, taille (linéaire)
+     * Quatrième méthode de calcul de score d'un fichier en se concentrant sur: ouverture, modification, taille (linéaire)
      * @param d 
      */
     public void calculScore4(Donnee d){
         
+    }
+    
+    
+     /**
+     * Cette méthode sert à trouver une Donnee de GestionScore
+     * @param path
+     * @return 
+     */
+    public Donnee findDonnee(String path){
+        for(Donnee d : donnees){
+            if(path.equals(d.getPath())){
+                return d;
+            }
+        }
+        return null;
     }
 }
