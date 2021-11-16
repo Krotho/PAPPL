@@ -12,12 +12,15 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -53,10 +56,33 @@ public class InterfaceGraphique extends JFrame {
     //Menu 
     public JButton GestionParametre = new JButton("Paramètres");
     public JButton DossierArchive = new JButton("Def Archive");
-    public JButton DossierSuppresion = new JButton("Def Suppression");
+    public JButton DossierSuppression = new JButton("Def Suppression");
+    
+    
+    //Paramètres
+    
+    public JSlider A;
+    public JSlider B;
+    public JSlider C;
+    public JSlider D;
+    public JSlider E;
+    public JSlider F;
+    public JSlider G;
+    public JSlider H;
     
     public JFrame frameParam;
     
+    //Archive   
+    public JFileChooser chooserArchive;
+    public String pathArchive;
+    
+    //Corbeille
+    public JFileChooser chooserCorbeille;
+    public String pathCorbeille;
+    /**
+     * Constructeur d'InterfaceGraphique
+     * @throws Exception 
+     */
     public InterfaceGraphique() throws Exception{
 
         // Instanciation de la fenêtre
@@ -86,6 +112,10 @@ public class InterfaceGraphique extends JFrame {
         
     }
     
+    
+    /**
+     * Affichage de la page de modification de l'importance des paramètres
+     */
     private void AfficheParametre(){
         
         JFrame windows = new JFrame("Paramètres"); 
@@ -104,7 +134,7 @@ public class InterfaceGraphique extends JFrame {
         
         //Gestion des sliders \\
       
-        JSlider A = new JSlider(0,100);
+        A = new JSlider(0,100);
         JLabel Atxt= new JLabel("A",SwingConstants.CENTER);
         JPanel pA = new JPanel();
         pA.setLayout(new GridLayout(2,1));
@@ -112,7 +142,7 @@ public class InterfaceGraphique extends JFrame {
         pA.add(A);
         pA.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,1));
         
-        JSlider B = new JSlider(0,100);
+        B = new JSlider(0,100);
         JLabel Btxt= new JLabel("B",SwingConstants.CENTER);
         JPanel pB = new JPanel();
         pB.setLayout(new GridLayout(2,1));
@@ -120,7 +150,7 @@ public class InterfaceGraphique extends JFrame {
         pB.add(B);        
         pB.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,1));
         
-        JSlider C = new JSlider(0,100);
+        C = new JSlider(0,100);
         JLabel Ctxt= new JLabel("C",SwingConstants.CENTER);
         JPanel pC = new JPanel();
         pC.setLayout(new GridLayout(2,1));
@@ -128,7 +158,7 @@ public class InterfaceGraphique extends JFrame {
         pC.add(C);
         pC.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,1));
         
-        JSlider D = new JSlider(0,100);    
+        D = new JSlider(0,100);    
         JLabel Dtxt= new JLabel("D",SwingConstants.CENTER);
         JPanel pD = new JPanel();
         pD.setLayout(new GridLayout(2,1));
@@ -136,7 +166,7 @@ public class InterfaceGraphique extends JFrame {
         pD.add(D);
         pD.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,1));
         
-        JSlider E = new JSlider(0,100);
+        E = new JSlider(0,100);
         JLabel Etxt= new JLabel("E",SwingConstants.CENTER);
         JPanel pE = new JPanel();
         pE.setLayout(new GridLayout(2,1));
@@ -144,7 +174,7 @@ public class InterfaceGraphique extends JFrame {
         pE.add(E);
         pE.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,1));
         
-        JSlider F = new JSlider(0,100);
+        F = new JSlider(0,100);
         JLabel Ftxt= new JLabel("F",SwingConstants.CENTER);
         JPanel pF = new JPanel();
         pF.setLayout(new GridLayout(2,1));
@@ -152,7 +182,7 @@ public class InterfaceGraphique extends JFrame {
         pF.add(F);
         pF.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,1));
         
-        JSlider G = new JSlider(0,100);      
+        G = new JSlider(0,100);      
         JLabel Gtxt= new JLabel("G",SwingConstants.CENTER);
         JPanel pG = new JPanel();
         pG.setLayout(new GridLayout(2,1));
@@ -160,7 +190,7 @@ public class InterfaceGraphique extends JFrame {
         pG.add(G);
         pG.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,1));
         
-        JSlider H = new JSlider(0,100);
+        H = new JSlider(0,100);
         JLabel Htxt= new JLabel("H",SwingConstants.CENTER);
         JPanel pH = new JPanel();
         pH.setLayout(new GridLayout(2,1));
@@ -204,16 +234,32 @@ public class InterfaceGraphique extends JFrame {
         frameParam=windows;
     }
     
-
+    /**
+     * Création du Panel au sud de la frame affichée
+     * @return
+     * @throws Exception 
+     */
     private JPanel SouthFace()throws Exception{
         JPanel jp =new JPanel();
         jp.setLayout(new FlowLayout());
         jp.add(Supprimer);
-        Supprimer.addActionListener((e)->Supprimer());
+        Supprimer.addActionListener((e)->{
+            try {
+                Supprimer();
+            } catch (Exception ex) {
+                Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
         Supprimer.setPreferredSize(new Dimension(150,40));
         
         jp.add(Archiver);
-        Archiver.addActionListener((e)->Archiver());
+        Archiver.addActionListener((e)->{
+            try {
+                Archiver();
+            } catch (Exception ex) {
+                Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
         Archiver.setPreferredSize(new Dimension(150,40));
         
         jp.add(Relancer);
@@ -228,12 +274,24 @@ public class InterfaceGraphique extends JFrame {
         return jp;
     }
     
+    
+    /**
+     * Création du Panel au nord de la frame affichée (toolbar)
+     * @return 
+     */
     private JToolBar NorthFace(){
         JToolBar jt = new JToolBar();
+        //Bouton paramètre
         GestionParametre.addActionListener((e)->AfficheParametre());
         jt.add(GestionParametre);
+        
+        //Bouton définition du dossier d'archive
+        DossierArchive.addActionListener((e)->ajoutArchive());
         jt.add(DossierArchive);
-        jt.add(DossierSuppresion);
+        
+        //Bouton définition du dossier de suppression
+        DossierSuppression.addActionListener((e)->ajoutCorbeille());
+        jt.add(DossierSuppression);
         return jt;
     }
     
@@ -246,10 +304,23 @@ public class InterfaceGraphique extends JFrame {
         IG.setVisible(true);
     }
     /**
-     * Méthode lancée lors de l'appuie sur le bouton Supprimer
+     * Méthode lancée lors de l'appuie sur le bouton Supprimer, elle déplace un/des fichier/s dans la corbeille si celle-ci est définie
+     * cela relance aussi l'affichage des Données (peut être à améliorer)
      */
-    private void Supprimer(){
-        System.out.println("Suppression");
+    private void Supprimer()throws Exception{
+        //Dans le cas où le chemin d'accès est définit on déplace les fichiers choisis
+        if(pathCorbeille!=null){
+            int[] listeIndice = liste.getSelectedIndices();
+            for(int i : listeIndice){
+                Donnee d=IT.getGestionScore().getDonnees().get(i);
+                Files.move(Paths.get(d.getPath()),Paths.get(pathCorbeille+"\\"+d.getNom()));
+            }
+            Relancer();
+        }
+        else{
+            System.out.println("PAS DE DOSSIER DE SUPPRESSION DEFINI");
+            // \\
+        }
     }
     
     /**
@@ -257,15 +328,73 @@ public class InterfaceGraphique extends JFrame {
      * @throws Exception 
      */
     private void Relancer()throws Exception{
-        IT.gestionInterface();
-        liste = new JList(new Vector(IT.getGestionScore().getDonnees()));
+        if(A!=null){
+            IT.gScore.getP().setA(A.getValue());
+            IT.gScore.getP().setB(B.getValue());
+            IT.gScore.getP().setC(C.getValue());
+            IT.gScore.getP().setD(D.getValue());
+            IT.gScore.getP().setE(E.getValue());
+            IT.gScore.getP().setF(F.getValue());
+            IT.gScore.getP().setG(G.getValue());
+        }
+        IT.actualisationInterface();
+        liste.setListData(new Vector(IT.getGestionScore().getDonnees()));
     }
     
-    private void Archiver(){
-        System.out.println("Archiver");
+    /**
+     * Méthode Archiver  lancée lors de l'appuie sur le bouton Archiver
+     * lorsque des fichier sont sélectionnés sur la Jliste ils seront déplacés dans le dossier Archive si celui-ci est définit
+     * @throws Exception 
+     */
+    private void Archiver()throws Exception{
+        //Dans le cas où le chemin d'accès est définit on déplace les fichiers choisis
+        if(pathArchive!=null){
+            int[] listeIndice = liste.getSelectedIndices();
+            for(int i : listeIndice){
+                Donnee d=IT.getGestionScore().getDonnees().get(i);
+                Files.move(Paths.get(d.getPath()),Paths.get(pathArchive+"\\"+d.getNom()));
+            }
+            Relancer();
+        }
+        else{
+            System.out.println("PAS DE DOSSIER DARCHIVE DEFINI");
+            // \\
+        }
     }
 
-    private void ValidationParam(){
+    /**
+     * Bouton Valider de la fenêtre Paramètre qui permet de la fermer (les données des paramètres sont récupérées plus tard (lors de relancer)
+     */
+    private void ValidationParam(){     
         frameParam.dispose();
+    }
+    
+    
+    /**
+     * Lors de l'appuie sur la toolbar de "def archive" on ouvrir un JFileChooser permettant de choisir un dossier d'archive
+     */
+    private void ajoutArchive(){
+
+        chooserArchive = new JFileChooser("Définition du dossier Archive");
+        chooserArchive.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int retour = chooserArchive.showOpenDialog(this);
+
+        if(retour ==JFileChooser.APPROVE_OPTION){
+            //Ajout du path du dossier d'archive
+            pathArchive=chooserArchive.getSelectedFile().getAbsolutePath();
+        }
+    }
+    
+    /**
+    * Lors de l'appuie sur la toolbar de "def corbeille" on ouvrir un JFileChooser permettant de choisir un dossier corbeille
+    */
+    private void ajoutCorbeille(){
+        chooserCorbeille = new JFileChooser("Définition du dossier Corbeille");
+        chooserCorbeille.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int retour = chooserCorbeille.showOpenDialog(this);
+        if(retour == JFileChooser.APPROVE_OPTION){
+            //ajout du path du dossier corbeille
+            pathCorbeille=chooserCorbeille.getSelectedFile().getAbsolutePath();
+        }
     }
 }

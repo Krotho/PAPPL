@@ -32,12 +32,19 @@ public class Interface {
         this.pallier=_pallier;
         this.gScore = new GestionScore();
     }
+    
+    public void actualisationInterface() throws Exception{
+        gScore.setDonnees(new ArrayList());
+        gScore.parcours();
+        gScore.calculScore(1);
+        gScore.triScore();
+    }
     /**
      * Cette fonction va gérer l'interface dans sa globalité avec les demande à l'utilisateur et les résultats
      */
     public void gestionInterface() throws IOException, URISyntaxException{
         //On commence par demande à l'utilisateur les chemins d'accès qu'il veut
-        
+        gScore = new GestionScore();
         Scanner sc = new Scanner(System.in);
         String input;
         ArrayList<String> paths = new ArrayList();
