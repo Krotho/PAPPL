@@ -26,7 +26,8 @@ public class Test {
         }
         */
         
-        Interface I = new Interface(150);
+
+
 //        I.gestionInterface();
         for(String s : Interface.gScore.getPaths()){
             System.out.println(s);

@@ -24,7 +24,7 @@ public class GestionScore {
     private List<String> paths; //Liste des paths à traiter
     private List<String> ignoredPaths; //Liste des paths à ignorer, qu'il s'agisse de dossiers ou de fichiers
     private List<Donnee> donnees; //Liste des données des fichiers trouvés
-    private Parametres p; //Paramètres pour les calculs de scores
+    private Parametres p=new Parametres(); //Paramètres pour les calculs de scores
     private List<String> extensionsTraites; //Liste des extensions que l'on va traiter
     
     class Parametres{
@@ -193,7 +193,10 @@ public class GestionScore {
     public void setDonnees(List<Donnee> donnees) {
         this.donnees = donnees;
     }
-
+    
+    public Parametres getP(){
+        return this.p;
+    }
     /**
      *
      * @param path

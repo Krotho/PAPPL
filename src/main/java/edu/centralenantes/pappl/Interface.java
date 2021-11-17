@@ -23,6 +23,8 @@ import java.util.Set;
  */
 public class Interface {
 
+ 
+
     /**
      * Gestion de score qu'on relie à l'interface par une variable statique
      */
@@ -42,10 +44,18 @@ public class Interface {
      *
      * @param _pallier
      */
+
     public Interface(int _pallier){
         Interface.pallier=_pallier;
         Interface.gScore = new GestionScore();
         Interface.choixScore = 1;
+    }
+    
+    public void actualisationInterface() throws Exception{
+        gScore.setDonnees(new ArrayList());
+        gScore.parcours();
+        gScore.calculScore(1);
+        gScore.triScore();
     }
     /**
      * Cette fonction va gérer l'interface dans sa globalité avec les demande à l'utilisateur et les résultats
@@ -54,7 +64,7 @@ public class Interface {
      */
     public void gestionInterface() throws IOException, URISyntaxException{
         //On commence par demande à l'utilisateur les chemins d'accès qu'il veut
-        
+        gScore = new GestionScore();
         Scanner sc = new Scanner(System.in);
         String input;
         ArrayList<String> paths = new ArrayList();
@@ -81,6 +91,7 @@ public class Interface {
         //On tri ensuite la liste
         
         gScore.triScore();
+        /*
         
         //Maintenant, on va afficher tous les fichiers ayant un score supérieur au pallier
         
@@ -99,7 +110,8 @@ public class Interface {
         }
         
         
-        //
+        //Archivage d'un fichier 
+        
         System.out.println("Voulez vous archiver un fichier de la liste?");
         input=sc.nextLine();
         while("O".equals(input)){
@@ -130,7 +142,7 @@ public class Interface {
             System.out.println("Voulez vous archiver un fichier de la liste?");
             input =sc.nextLine();
         }
-        
+        */
     
         
     }
