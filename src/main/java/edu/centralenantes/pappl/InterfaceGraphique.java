@@ -14,6 +14,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,6 +44,7 @@ public class InterfaceGraphique extends JFrame {
     
     private Interface IT;
     
+    public JPanel contentPane;
     public JPanel monPanneau;
     public GridLayout layout;
     public JSlider slider;
@@ -57,7 +60,7 @@ public class InterfaceGraphique extends JFrame {
     public JButton GestionParametre = new JButton("Paramètres");
     public JButton DossierArchive = new JButton("Def Archive");
     public JButton DossierSuppression = new JButton("Def Suppression");
-    
+    public JButton GestionPaths = new JButton("Chemins d'accès");
     
     //Paramètres
     
@@ -79,6 +82,21 @@ public class InterfaceGraphique extends JFrame {
     //Corbeille
     public JFileChooser chooserCorbeille;
     public String pathCorbeille;
+    
+    //Chemin d'accès
+    
+    public JFrame framePath;
+    public JList listePath;
+    public JButton suppPath = new JButton("Supprimer");
+    public JButton ajoutPath = new JButton("Ajouter");
+    public JFileChooser chooserPath;
+    //Interface Initiale
+    public JButton Lancer = new JButton("Lancer l'application");
+    public JFrame frameFirst;
+    public JPanel paneFirst;
+    public JToolBar northPanel;
+    
+    //
     /**
      * Constructeur d'InterfaceGraphique
      * @throws Exception 
@@ -87,29 +105,28 @@ public class InterfaceGraphique extends JFrame {
 
         // Instanciation de la fenêtre
         super("Application PAPPL ALPHA");
-        IT = new Interface(350);
-        IT.gestionInterface();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(900,600);
         this.setLocationRelativeTo(null);
-        
-        
-        Vector v = new Vector(IT.gScore.getDonnees());
-        liste = new JList(v);
-        
-        JScrollPane jsp=new JScrollPane(liste);
-        //Ajout de composants
-        
-        JPanel contentPane =(JPanel)this.getContentPane();
-        
+        contentPane = (JPanel)this.getContentPane();
         contentPane.setLayout(new BorderLayout());
-        contentPane.add(NorthFace(), BorderLayout.NORTH);
+        northPanel = NorthFace();
         contentPane.add(SouthFace(), BorderLayout.SOUTH);
-        contentPane.add(jsp);
-        
-        //Look de la fenêtre
-        //AfficheParametre();
-        
+        this.setVisible(false);
+        //Ajout de la barre de menu
+        frameFirst = new JFrame("Application PAPPL APHA");
+        frameFirst.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameFirst.setSize(900,600);
+        frameFirst.setLocationRelativeTo(null);
+        paneFirst = new JPanel();       
+        paneFirst.setLayout(new BorderLayout());
+        paneFirst.add(northPanel, BorderLayout.NORTH);     
+        paneFirst.add(firstSouthFace(), BorderLayout.CENTER);
+        frameFirst.add(paneFirst);
+        frameFirst.pack();
+        frameFirst.setVisible(true);
+        IT = new Interface(130);
+
     }
     
     
@@ -274,7 +291,33 @@ public class InterfaceGraphique extends JFrame {
         return jp;
     }
     
-    
+    private JPanel firstSouthFace() throws Exception{
+        JPanel jp = new JPanel();
+        jp.add(Lancer);
+        
+        Lancer.addActionListener((e)->{
+            try {
+                Lancer();
+            } catch (Exception ex) {
+                Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });    
+        return jp;
+    }
+    private void Lancer()throws Exception{
+        IT.gestionInterface();
+        // Création de la nouvelle fenêtre
+        Vector v = new Vector(IT.gScore.getDonnees());
+        liste = new JList(v);
+        
+        contentPane =(JPanel)this.getContentPane();       
+        JScrollPane jsp=new JScrollPane(liste);
+        contentPane.add(northPanel, BorderLayout.NORTH);
+        //Ajout de composants
+        contentPane.add(jsp);
+        frameFirst.dispose();
+        this.setVisible(true);
+    }
     /**
      * Création du Panel au nord de la frame affichée (toolbar)
      * @return 
@@ -292,16 +335,73 @@ public class InterfaceGraphique extends JFrame {
         //Bouton définition du dossier de suppression
         DossierSuppression.addActionListener((e)->ajoutCorbeille());
         jt.add(DossierSuppression);
+        
+        //Bouton permettant de modifier les paths à visiter
+        GestionPaths.addActionListener((e)->AffichePath());
+        jt.add(GestionPaths);
+        
         return jt;
     }
     
+    public void AffichePath(){
+        framePath= new JFrame("Gestion des chemins d'accès");
+        framePath.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        framePath.setSize(600,400);
+        framePath.setLocationRelativeTo(null);
+        JPanel panelPath= new JPanel(new BorderLayout());
+        
+        JPanel boutonpanelPath = new JPanel(new FlowLayout());
+        //Affichage de la liste des paths
+        Vector pathlist = new Vector(IT.gScore.getPaths());
+ 
+        listePath = new JList(pathlist);
+        JScrollPane jspp= new JScrollPane(listePath); 
+        
+        //Choisir un path à ajouter
+        ajoutPath =new JButton("Ajouter");
+        ajoutPath.addActionListener((e)->AjouterPath());
+        boutonpanelPath.add(ajoutPath);
+        //Choisir un path à supprimer
+        suppPath = new JButton("Supprimer");
+        suppPath.addActionListener((e)->SupprimerPath());
+        boutonpanelPath.add(suppPath);
+        //Ajouter tout ça à la frame
+        
+        panelPath.add(jspp);
+        panelPath.add(boutonpanelPath, BorderLayout.SOUTH);
+        
+        framePath.setContentPane(panelPath);
+        framePath.pack();
+        framePath.setVisible(true);
+        
+    }
+    public void AjouterPath(){
+        chooserPath = new JFileChooser("Définition du dossier Archive");
+        chooserPath.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int retour = chooserPath.showOpenDialog(this);
+
+        if(retour ==JFileChooser.APPROVE_OPTION){
+            //Ajout du path du dossier d'archive
+            IT.gScore.getPaths().add(chooserPath.getSelectedFile().getAbsolutePath());
+        }
+        listePath.setListData(IT.gScore.getPaths().toArray());
+    }
+    public void SupprimerPath(){
+        List<String> paths =IT.gScore.getPaths();
+        int i=0;
+        int[] indexListe = listePath.getSelectedIndices();
+        for(int index : indexListe ){
+            paths.remove(index-i);
+            i++;
+        }
+        listePath.setListData(new Vector(IT.gScore.getPaths()));
+    }
     public static void main(String[] args)throws Exception{
         // Ajout d'un look
         UIManager.setLookAndFeel(new NimbusLookAndFeel());
         
         //Lancement de la fenêtre
         InterfaceGraphique IG = new InterfaceGraphique();
-        IG.setVisible(true);
     }
     /**
      * Méthode lancée lors de l'appuie sur le bouton Supprimer, elle déplace un/des fichier/s dans la corbeille si celle-ci est définie

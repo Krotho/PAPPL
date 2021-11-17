@@ -63,89 +63,14 @@ public class Interface {
      * @throws java.net.URISyntaxException
      */
     public void gestionInterface() throws IOException, URISyntaxException{
-        //On commence par demande à l'utilisateur les chemins d'accès qu'il veut
-        gScore = new GestionScore();
-        Scanner sc = new Scanner(System.in);
-        String input;
-        ArrayList<String> paths = new ArrayList();
-        
-        
-        System.out.println("Veuillez indiquer le chemin d'accès: ");
-        /*
-        input =sc.nextLine();
-        paths.add(input);
-        */
-        //paths.add("C:\\Users\\Boulanger\\Downloads");
-        paths.add("C:\\Users\\asjou\\Downloads");
-        paths.add("C:\\Users\\asjou\\Documents\\Documents");
-        gScore.setPaths(paths);
-        
-        
-        //On lance la recherche des fichiers de gScore
-        
-        gScore.parcours();
-        
+        //On lance la recherche des fichiers de gScore        
+        gScore.parcours();       
         //On calcul le score de chaque donnee
-        gScore.calculScore(choixScore);
-    
-        //On tri ensuite la liste
-        
-        gScore.triScore();
-        /*
-        
-        //Maintenant, on va afficher tous les fichiers ayant un score supérieur au pallier
-        
-        afficheDonnee();
-        
-        //Suppression d'un fichier
-        System.out.println("Voulez vous supprimer un fichier de la liste?");
-        input=sc.nextLine();
-        while("O".equals(input)){
-            
-            System.out.println("Veuillez indiquer le chemin d'accès");
-            input = sc.nextLine();
-            deleteFichier(input);
-            System.out.println("Voulez vous supprimer un fichier de la liste?");
-            input=sc.nextLine();
-        }
-        
-        
-        //Archivage d'un fichier 
-        
-        System.out.println("Voulez vous archiver un fichier de la liste?");
-        input=sc.nextLine();
-        while("O".equals(input)){
-            
-            System.out.println("Veuillez indiquer le chemin d'accès du fichier");
-            String oldPath = sc.nextLine();
-            Donnee donnee=gScore.findDonnee(oldPath);
-            if(donnee!=null){
-                System.out.println("Veuillez indiquer le nom du Dossier dans lequel vous voulez placer le fichier");
-                String folderPath=sc.nextLine();
-                folderPath=folderPath+donnee.getNom();
-               
-                //of.renameTo(nf);
-                Path tmp = Files.move(Paths.get(oldPath), Paths.get(folderPath)); 
-                System.out.println(folderPath);
-                if(tmp != null) 
-                { 
-                    System.out.println("Fichier déplacé avec succès"); 
-                } 
-                else
-                {
-                    System.out.println("Impossible de déplacer le fichier"); 
-                }     
-            }
-            else{
-                System.out.println("Le fichier spécifié n'existe pas"); 
-            }
-            System.out.println("Voulez vous archiver un fichier de la liste?");
-            input =sc.nextLine();
-        }
-        */
-    
-        
+        gScore.calculScore(choixScore);   
+        //On tri ensuite la liste       
+        gScore.triScore();   
     }
+    
     /**
      * La méthode affiche va afficher à chaque ligne le path, le nom du fichier et son score si celui-ci est supérieur au pallier
      */
