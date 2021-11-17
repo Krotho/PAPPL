@@ -194,9 +194,6 @@ public class GestionScore {
         this.donnees = donnees;
     }
     
-    public Parametres getP(){
-        return this.p;
-    }
     /**
      *
      * @param path

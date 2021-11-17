@@ -94,7 +94,7 @@ public class InterfaceGraphique extends JFrame {
         this.setLocationRelativeTo(null);
         
         
-        Vector v = new Vector(IT.getGestionScore().getDonnees());
+        Vector v = new Vector(IT.gScore.getDonnees());
         liste = new JList(v);
         
         JScrollPane jsp=new JScrollPane(liste);
@@ -312,7 +312,7 @@ public class InterfaceGraphique extends JFrame {
         if(pathCorbeille!=null){
             int[] listeIndice = liste.getSelectedIndices();
             for(int i : listeIndice){
-                Donnee d=IT.getGestionScore().getDonnees().get(i);
+                Donnee d=IT.gScore.getDonnees().get(i);
                 Files.move(Paths.get(d.getPath()),Paths.get(pathCorbeille+"\\"+d.getNom()));
             }
             Relancer();
@@ -338,7 +338,7 @@ public class InterfaceGraphique extends JFrame {
             IT.gScore.getP().setG(G.getValue());
         }
         IT.actualisationInterface();
-        liste.setListData(new Vector(IT.getGestionScore().getDonnees()));
+        liste.setListData(new Vector(IT.gScore.getDonnees()));
     }
     
     /**
@@ -351,7 +351,7 @@ public class InterfaceGraphique extends JFrame {
         if(pathArchive!=null){
             int[] listeIndice = liste.getSelectedIndices();
             for(int i : listeIndice){
-                Donnee d=IT.getGestionScore().getDonnees().get(i);
+                Donnee d=IT.gScore.getDonnees().get(i);
                 Files.move(Paths.get(d.getPath()),Paths.get(pathArchive+"\\"+d.getNom()));
             }
             Relancer();
