@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
 public class GestionScore {
 
     private List<String> paths; //Liste des paths à traiter
+    private List<String> ignoredPaths; //Liste des paths à ignorer, qu'il s'agisse de dossiers ou de fichiers
     private List<Donnee> donnees; //Liste des données des fichiers trouvés
     private Parametres p=new Parametres(); //Paramètres pour les calculs de scores
     private List<String> extensionsTraites; //Liste des extensions que l'on va traiter
@@ -68,8 +69,18 @@ public class GestionScore {
             G=1.0e-3;
         }
         
-        
-
+        public Parametres(ArrayList<String> s){
+            this();
+            if(s.size()>6){
+                A=s.indexOf(0);
+                B=s.indexOf(1);
+                C=s.indexOf(2);
+                D=s.indexOf(3);
+                E=s.indexOf(4);
+                F=s.indexOf(5);
+                G=s.indexOf(6);
+            }
+        }
     }
     
     /**
@@ -83,7 +94,7 @@ public class GestionScore {
         this.extensionsTraites = new ArrayList();
         this.extensionsTraites.add(".pdf");
         this.p = new Parametres();
-
+        this.ignoredPaths = new ArrayList();
     }
     
     /**
@@ -98,6 +109,7 @@ public class GestionScore {
         //Par défaut on traite l'extension pdf
         this.extensionsTraites.add(".pdf");
         this.p = new Parametres();
+        this.ignoredPaths = new ArrayList();
     }
     
     /**
@@ -110,6 +122,7 @@ public class GestionScore {
         this.donnees = new ArrayList();
         this.extensionsTraites = extensionsTraites;
         this.p = new Parametres();
+        this.ignoredPaths = new ArrayList();
     }
 
     /**
@@ -126,10 +139,45 @@ public class GestionScore {
      */
     public void setPaths(List<String> paths) {
         this.paths = paths;
-
-
     }
 
+    /**
+     *
+     * @return
+     */
+    public List<String> getIgnoredPaths() {
+        return ignoredPaths;
+    }
+
+    /**
+     *
+     * @param ignoredPaths
+     */
+    public void setIgnoredPaths(List<String> ignoredPaths) {
+        this.ignoredPaths = ignoredPaths;
+    }
+
+    public Parametres getP() {
+        return p;
+    }
+
+    public void setP(Parametres p) {
+        this.p = p;
+    }
+    
+    public void setP(ArrayList<String> s){
+        if(s.size()>6){
+            p.setA(s.indexOf(0));
+            p.setB(s.indexOf(1));
+            p.setC(s.indexOf(2));
+            p.setD(s.indexOf(3));
+            p.setE(s.indexOf(4));
+            p.setF(s.indexOf(5));
+            p.setG(s.indexOf(6));
+        }
+    }
+    
+    
     /**
      *
      * @return
@@ -158,6 +206,11 @@ public class GestionScore {
         Donnee d = new Donnee(path);
         donnees.add(d);
     }
+    
+    public void ajoutDonnee(Donnee d){
+        donnees.add(d);
+    }
+    
     public void calculScore(int i){
         for(Donnee D : donnees){
             calculScore(D,i);
@@ -278,7 +331,10 @@ public class GestionScore {
     public void parcours_path(String chemin) throws IOException{
         boolean bName;
         File repertoire = new File(chemin);
-        File[] files;
+        File[] files = new File[]{};
+        if(this.ignoredPaths.contains(repertoire.getPath())){
+            return;
+        }
         if(repertoire.isDirectory()){
             files=repertoire.listFiles();
         }
@@ -297,7 +353,7 @@ public class GestionScore {
             Pattern uName = Pattern.compile(this.expressionLogiqueExtensionsTraites());
             Matcher mUname = uName.matcher(fileName);
             bName = mUname.matches();
-            if (bName && !this.isInDonnees(file.getPath())) {
+            if (bName && !this.isInDonnees(file.getPath()) &&!(this.ignoredPaths.contains(file.getPath()))) {
                 donnees.add(new Donnee(file.getPath()));
                 //donnees.get(0).afficheDonnee();
             }
@@ -315,8 +371,8 @@ public class GestionScore {
         for(String path : this.paths){
             parcours_path(path);
         }
-
     }
+    
     
      /**
      * Quatrième méthode de calcul de score d'un fichier en se concentrant sur: ouverture, modification, taille (linéaire)

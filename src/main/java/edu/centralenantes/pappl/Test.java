@@ -5,6 +5,7 @@
  */
 package edu.centralenantes.pappl;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Date;
@@ -25,8 +26,20 @@ public class Test {
         }
         */
         
-        Interface I = new Interface(150);
-        I.gestionInterface();
-            
+
+
+//        I.gestionInterface();
+        for(String s : Interface.gScore.getPaths()){
+            System.out.println(s);
+        }
+        System.out.println(Interface.pallier);
+        ChargementApplication ca = new ChargementApplication("testPAPPL2.txt");
+        ca.chargerApplication();
+        System.out.println(Interface.pallier);
+        
+        File f = new File("testPAPPL3.txt");
+        EnregistrerApplication e = new EnregistrerApplication("testPAPPL3.txt");
+        e.enregistrerApplication(I);
+        
     }
 }
