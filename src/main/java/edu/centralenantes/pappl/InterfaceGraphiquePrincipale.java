@@ -45,8 +45,24 @@ public class InterfaceGraphiquePrincipale extends JFrame{
     
     //Param
     public static boolean paramOpen;
+
     
     
+    public String getPathArchive() {
+        return pathArchive;
+    }
+
+    public void setPathArchive(String pathArchive) {
+        this.pathArchive = pathArchive;
+    }
+
+    public String getPathCorbeille() {
+        return pathCorbeille;
+    }
+
+    public void setPathCorbeille(String pathCorbeille) {
+        this.pathCorbeille = pathCorbeille;
+    }
     
     
     /**
@@ -60,7 +76,10 @@ public class InterfaceGraphiquePrincipale extends JFrame{
         this.setSize(900,600);
         this.setLocationRelativeTo(null);
         //Creation d'Interface
-        IT = new Interface(150);  
+        IT = new Interface(150); 
+        
+        //Charger Fichier Sauvegarde si il existe
+        
         paramOpen=false;
         //Creation du panel de la frame
         contentPanel=(JPanel)this.getContentPane();
