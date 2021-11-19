@@ -6,6 +6,7 @@
 package edu.centralenantes.pappl;
 
 import java.awt.*;
+import java.awt.event.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -20,7 +21,7 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
  *
  * @author Boulanger
  */
-public class InterfaceGraphiquePrincipale extends JFrame{
+public class InterfaceGraphiquePrincipale extends JFrame implements WindowListener{
     private JPanel contentPanel;
     
     private JPanel firstPanel;
@@ -75,6 +76,7 @@ public class InterfaceGraphiquePrincipale extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(900,600);
         this.setLocationRelativeTo(null);
+        this.addWindowListener(this);
         //Creation d'Interface
         IT = new Interface(150); 
         
@@ -370,4 +372,42 @@ public class InterfaceGraphiquePrincipale extends JFrame{
         InterfaceGraphiquePrincipale IGP= new InterfaceGraphiquePrincipale();
         
     }
+    
+    
+    
+    
+    
+    
+    	@Override
+	public void windowActivated(WindowEvent e) { }
+ 
+	@Override
+	public void windowClosed(WindowEvent e) {
+	}
+ 
+	@Override
+	public void windowClosing(WindowEvent e){
+            //On fait apparaître une fenêtre pour savoir si l'utilisateur veut sauvegarder ou non
+             if(JOptionPane.showConfirmDialog(contentPanel, "Voulez-vous sauvegarder la configuration ?","Confirmation",JOptionPane.OK_CANCEL_OPTION)==JOptionPane.YES_OPTION){
+                 EnregistrerApplication EA = new EnregistrerApplication("Config.txt");//On crée l'objet pour enregistrer 
+                 try {
+                     EA.enregistrerApplication(IT);//On enregistre
+                 } catch (IOException ex) {
+                     Logger.getLogger(InterfaceGraphiquePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+                 }
+            }
+        }
+	
+ 
+	@Override
+	public void windowDeactivated(WindowEvent e) { }
+ 
+	@Override
+	public void windowDeiconified(WindowEvent e) { }
+ 
+	@Override
+	public void windowIconified(WindowEvent e) { }
+ 
+	@Override
+	public void windowOpened(WindowEvent e) { }
 }
