@@ -7,14 +7,18 @@ package edu.centralenantes.pappl;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
@@ -45,8 +49,6 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
     //JListe
     private JList liste;
     
-    //Param
-    public static boolean paramOpen;
 
     
     
@@ -69,8 +71,9 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
     
     /**
      * Constructeur d'InterfaceGraphiquePrincipale
+     * @throws java.io.IOException
      */
-    public InterfaceGraphiquePrincipale(){
+    public InterfaceGraphiquePrincipale() throws IOException{
         
         //Creation de la frame Initiale
         super("Application PAPPL");
@@ -90,7 +93,6 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
             //Fichier Config non lu ou trouvé
         }
         
-        paramOpen=false;
         //Creation du panel de la frame
         contentPanel=(JPanel)this.getContentPane();
         contentPanel.setLayout(new CardLayout());
@@ -101,7 +103,9 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
         //Creation de la première frame (toolbar + bouton lancer)
         
         jtoolBar = createToolBar();
-
+        BufferedImage image = ImageIO.read(new File("IconT.png"));
+        JLabel imageLabel = new JLabel(new ImageIcon(image));
+        firstPanel.add(imageLabel,BorderLayout.CENTER);
         firstPanel.add(firstButton(),BorderLayout.SOUTH);
         firstPanel.add(jtoolBar, BorderLayout.NORTH);
         
@@ -111,8 +115,10 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
         
         secondPanel.add(secondButtons(),BorderLayout.SOUTH);
         //secondPanel.add(jtoolBar,BorderLayout.NORTH);
-        Vector v = new Vector(IT.gScore.getDonnees());
-        liste = new JList(v);     
+        Vector v = new Vector(IT.gScore.getDonneesPallier(IT.pallier));
+        liste = new JList(v);
+        liste.setCellRenderer(new TestCellRenderer());
+        
         JScrollPane jsp=new JScrollPane(liste);
         secondPanel.add(jsp,BorderLayout.CENTER);
         
@@ -135,7 +141,7 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
         }
         else{
             IT.gestionInterface();
-            liste.setListData(IT.gScore.getDonnees().toArray());
+            liste.setListData(IT.gScore.getDonneesPallier(IT.pallier).toArray());
             secondPanel.add(jtoolBar,BorderLayout.NORTH);
            ((CardLayout)contentPanel.getLayout()).next(contentPanel);
         }
@@ -180,14 +186,9 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
      * Lance une nouvelle frame qui va permettre de gérer les paramètres
      */
     private void afficheParam(){
-        if(!paramOpen){
-            InterfaceGraphiqueParametres IGP = new InterfaceGraphiqueParametres();
-            paramOpen=true;
-        }
-        else{
-            JOptionPane.showMessageDialog(contentPanel, "Une fenêtre Paramètre est déjà ouverte!","Erreur", JOptionPane.ERROR_MESSAGE);          
-        }
-    }
+            InterfaceGraphiqueParametres IGP = new InterfaceGraphiqueParametres(this);
+    } 
+
     
     
     
@@ -373,7 +374,7 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
         }
         else{
             IT.actualisationInterface();
-            liste.setListData(IT.gScore.getDonnees().toArray());  
+            liste.setListData(IT.gScore.getDonneesPallier(IT.pallier).toArray());  
         }
     }
     
