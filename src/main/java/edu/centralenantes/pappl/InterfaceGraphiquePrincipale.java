@@ -162,6 +162,11 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
         gestionParam.addActionListener((e)->afficheParam());
         toolBar.add(gestionParam);
         
+        //Bouton de modification des extensions
+        JButton gestionExtensions = new JButton("Extensions traitées");
+        gestionExtensions.addActionListener((e)->defExtensions());
+        toolBar.add(gestionExtensions);
+        
         //Bouton de définition du dossier d'archive
         JButton gestionArchive=new JButton("Dossier Archive");
         gestionArchive.addActionListener((e)->defArchive());
@@ -189,7 +194,12 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
             InterfaceGraphiqueParametres IGP = new InterfaceGraphiqueParametres(this);
     } 
 
-    
+    /**
+     * Lance une nouvelle frame qui va permettre de gérer les paramètres
+     */
+    private void defExtensions(){
+            InterfaceGraphiqueExtensions IGE = new InterfaceGraphiqueExtensions(this);
+    } 
     
     
     /**
