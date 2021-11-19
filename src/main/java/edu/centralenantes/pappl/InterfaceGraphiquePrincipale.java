@@ -245,7 +245,11 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
             try {
                 Lancer();
             } catch (Exception ex) {
-                Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
+                try {
+                    Relancer();
+                } catch (Exception ex1) {
+                    Logger.getLogger(InterfaceGraphiquePrincipale.class.getName()).log(Level.SEVERE, null, ex1);
+                }
             }
         });
         return jp;
