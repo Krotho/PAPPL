@@ -304,6 +304,8 @@ public class InterfaceGraphique extends JFrame {
         });    
         return jp;
     }
+    
+    
     private void Lancer()throws Exception{
         IT.gestionInterface();
         // Création de la nouvelle fenêtre
@@ -361,6 +363,7 @@ public class InterfaceGraphique extends JFrame {
         ajoutPath =new JButton("Ajouter");
         ajoutPath.addActionListener((e)->AjouterPath());
         boutonpanelPath.add(ajoutPath);
+        
         //Choisir un path à supprimer
         suppPath = new JButton("Supprimer");
         suppPath.addActionListener((e)->SupprimerPath());
