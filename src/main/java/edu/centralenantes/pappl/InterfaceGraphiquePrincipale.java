@@ -137,7 +137,7 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
             IT.gestionInterface();
             liste.setListData(IT.gScore.getDonnees().toArray());
             secondPanel.add(jtoolBar,BorderLayout.NORTH);
-           //((CardLayout)contentPanel.getLayout()).next(contentPanel);
+           ((CardLayout)contentPanel.getLayout()).next(contentPanel);
         }
        
     }

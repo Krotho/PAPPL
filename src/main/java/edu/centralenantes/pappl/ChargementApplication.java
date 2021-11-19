@@ -58,7 +58,7 @@ public class ChargementApplication {
         sT = new StringTokenizer(line, ";");
         sT.nextToken(); //On supprime "PathArchive"
         if(sT.hasMoreTokens()){
-            IGP.setPathCorbeille(sT.nextToken());
+            IGP.setPathArchive(sT.nextToken());
         }
         
         //Creation GestionScore de l'interface
