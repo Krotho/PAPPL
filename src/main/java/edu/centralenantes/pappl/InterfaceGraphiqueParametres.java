@@ -14,7 +14,7 @@ import java.awt.event.*;
  * les différents paramètres de l'application (pour les calculs) ainsi que de choisir la méthode de calcul
  * @author Boulanger
  */
-public class InterfaceGraphiqueParametres extends JFrame implements WindowListener {
+public class InterfaceGraphiqueParametres extends JDialog {
     
     private JSlider A;
     private JSlider B;
@@ -29,13 +29,12 @@ public class InterfaceGraphiqueParametres extends JFrame implements WindowListen
     /**
      * Constructeur de la classe InterfaceGraphiqueParametres
      */
-    public InterfaceGraphiqueParametres(){             
+    public InterfaceGraphiqueParametres(InterfaceGraphiquePrincipale IGP){             
         //Creation de la frame Initiale
-        super("Application PAPPL");
+        super(IGP,"Application PAPPL",true);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(600,400);
         this.setLocationRelativeTo(null);
-        this.addWindowListener(this);
         JPanel contentPane = (JPanel)this.getContentPane();
         /////////////////////// \\\\\\\\\\\\\\\\\\\\\\\
         
@@ -149,32 +148,7 @@ public class InterfaceGraphiqueParametres extends JFrame implements WindowListen
         Interface.gScore.getP().F=F.getValue()*1.0e-11;
         Interface.gScore.getP().G=G.getValue()*1.0e-4;
         //Interface.gScore.getP().H=H.getValue();
-        InterfaceGraphiquePrincipale.paramOpen=false;
         this.dispose();
     }
     
-	@Override
-	public void windowActivated(WindowEvent e) { }
- 
-	@Override
-	public void windowClosed(WindowEvent e) {
-	}
- 
-	@Override
-	public void windowClosing(WindowEvent e) {
-            //Lorsque la fenêtre est fermée autrement que par OK ou Annuler, on réinitialise paramOpen de l'interface graphiqeu
-            InterfaceGraphiquePrincipale.paramOpen=false;
-	}
- 
-	@Override
-	public void windowDeactivated(WindowEvent e) { }
- 
-	@Override
-	public void windowDeiconified(WindowEvent e) { }
- 
-	@Override
-	public void windowIconified(WindowEvent e) { }
- 
-	@Override
-	public void windowOpened(WindowEvent e) { }
 }

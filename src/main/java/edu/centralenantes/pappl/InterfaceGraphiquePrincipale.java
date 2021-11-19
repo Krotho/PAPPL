@@ -49,8 +49,6 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
     //JListe
     private JList liste;
     
-    //Param
-    public static boolean paramOpen;
 
     
     
@@ -94,7 +92,6 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
             //Fichier Config non lu ou trouvé
         }
         
-        paramOpen=false;
         //Creation du panel de la frame
         contentPanel=(JPanel)this.getContentPane();
         contentPanel.setLayout(new CardLayout());
@@ -188,14 +185,9 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
      * Lance une nouvelle frame qui va permettre de gérer les paramètres
      */
     private void afficheParam(){
-        if(!paramOpen){
-            InterfaceGraphiqueParametres IGP = new InterfaceGraphiqueParametres();
-            paramOpen=true;
-        }
-        else{
-            JOptionPane.showMessageDialog(contentPanel, "Une fenêtre Paramètre est déjà ouverte!","Erreur", JOptionPane.ERROR_MESSAGE);          
-        }
-    }
+            InterfaceGraphiqueParametres IGP = new InterfaceGraphiqueParametres(this);
+    } 
+
     
     
     
