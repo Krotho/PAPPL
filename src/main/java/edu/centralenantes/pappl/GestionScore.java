@@ -391,4 +391,15 @@ public class GestionScore {
         }
         return null;
     }
+    
+    public ArrayList<Donnee> getDonneesPallier(int pallier){
+        ArrayList<Donnee> alDonnees = new ArrayList();
+        for(Donnee d : donnees){
+            if(d.getScore()<pallier){
+                return alDonnees;
+            }
+            else{alDonnees.add(d);}
+        }
+        return alDonnees;
+    }
 }

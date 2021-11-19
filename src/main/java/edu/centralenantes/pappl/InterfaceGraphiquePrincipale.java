@@ -115,7 +115,7 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
         
         secondPanel.add(secondButtons(),BorderLayout.SOUTH);
         //secondPanel.add(jtoolBar,BorderLayout.NORTH);
-        Vector v = new Vector(IT.gScore.getDonnees());
+        Vector v = new Vector(IT.gScore.getDonneesPallier(IT.pallier));
         liste = new JList(v);
         liste.setCellRenderer(new TestCellRenderer());
         
@@ -141,7 +141,7 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
         }
         else{
             IT.gestionInterface();
-            liste.setListData(IT.gScore.getDonnees().toArray());
+            liste.setListData(IT.gScore.getDonneesPallier(IT.pallier).toArray());
             secondPanel.add(jtoolBar,BorderLayout.NORTH);
            ((CardLayout)contentPanel.getLayout()).next(contentPanel);
         }
@@ -374,7 +374,7 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
         }
         else{
             IT.actualisationInterface();
-            liste.setListData(IT.gScore.getDonnees().toArray());  
+            liste.setListData(IT.gScore.getDonneesPallier(IT.pallier).toArray());  
         }
     }
     
