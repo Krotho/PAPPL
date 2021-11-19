@@ -140,15 +140,14 @@ public class InterfaceGraphiqueParametres extends JFrame implements WindowListen
         this.setVisible(true);
     }
     
-    
     private void ValidationParam(){
-        Interface.gScore.getP().A=A.getValue();
-        Interface.gScore.getP().B=B.getValue();
-        Interface.gScore.getP().C=C.getValue();
+        Interface.gScore.getP().A=A.getValue()*1.0e-9;
+        Interface.gScore.getP().B=B.getValue()*0;
+        Interface.gScore.getP().C=C.getValue()*1.0e-16;
         Interface.gScore.getP().D=D.getValue();
-        Interface.gScore.getP().E=E.getValue();
-        Interface.gScore.getP().F=F.getValue();
-        Interface.gScore.getP().G=G.getValue();
+        Interface.gScore.getP().E=E.getValue()*1.0e-11;
+        Interface.gScore.getP().F=F.getValue()*1.0e-11;
+        Interface.gScore.getP().G=G.getValue()*1.0e-4;
         //Interface.gScore.getP().H=H.getValue();
         InterfaceGraphiquePrincipale.paramOpen=false;
         this.dispose();
