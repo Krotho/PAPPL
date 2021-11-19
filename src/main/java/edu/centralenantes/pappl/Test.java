@@ -34,12 +34,12 @@ public class Test {
         }
         System.out.println(Interface.pallier);
         ChargementApplication ca = new ChargementApplication("testPAPPL2.txt");
-        ca.chargerApplication();
+        //ca.chargerApplication();
         System.out.println(Interface.pallier);
         
         File f = new File("testPAPPL3.txt");
         EnregistrerApplication e = new EnregistrerApplication("testPAPPL3.txt");
-        e.enregistrerApplication(I);
+        //e.enregistrerApplication(I);
         
     }
 }

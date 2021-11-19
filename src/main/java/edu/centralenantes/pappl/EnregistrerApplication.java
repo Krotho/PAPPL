@@ -29,41 +29,45 @@ public class EnregistrerApplication {
     
     /**
      * Méthode pour enregistrer l'état de l'interface avant fermeture de l'application
-     * @param i
+     * @param IGP
      * @throws IOException
      */
-    public void enregistrerApplication(Interface i) throws IOException{
+    public void enregistrerApplication(InterfaceGraphiquePrincipale IGP) throws IOException{
         bw = new BufferedWriter(new FileWriter(this.path));
-        bw.write("Interface;"+ i.pallier+";"+i.choixScore+";\n");
+        bw.write("Interface;"+ Interface.pallier+";"+Interface.choixScore+";\n");
+        
+        //Enregistrement paths dossiers d'archive et de corbeille
+        bw.write("PathCorbeille;"+ IGP.getPathCorbeille()+";\n");
+        bw.write("PathCorbeille;"+ IGP.getPathArchive()+";\n");
         
         //Enregistrement GestionScore de l'interface
         //Enregistrement de paths
         bw.write("GScorePaths");
-        for(String s : i.gScore.getPaths()){
+        for(String s : Interface.gScore.getPaths()){
             bw.write(";" + s);
         }
         bw.write(";\n");
         
         //Enregistrement ignoredPaths
         bw.write("GScoreIgnoredPaths");
-        for(String s : i.gScore.getIgnoredPaths()){
+        for(String s : Interface.gScore.getIgnoredPaths()){
             bw.write(";" + s);
         }
         bw.write(";\n");
         
         //Enregistrement extensionsTraites
         bw.write("GScoreExtensionsTraites");
-        for(String s : i.gScore.getExtensionsTraites()){
+        for(String s : Interface.gScore.getExtensionsTraites()){
             bw.write(";" + s);
         }
         bw.write(";\n");
         
         //Enregistrement Parametres
-        bw.write("GScoreParametres;" + i.gScore.getP().A + ";" + i.gScore.getP().B + ";" + i.gScore.getP().C + ";"
-                + i.gScore.getP().D + ";" + i.gScore.getP().E + ";" + i.gScore.getP().F + ";" + i.gScore.getP().G + ";\n");
+        bw.write("GScoreParametres;" + Interface.gScore.getP().A + ";" + Interface.gScore.getP().B + ";" + Interface.gScore.getP().C + ";"
+                + Interface.gScore.getP().D + ";" + Interface.gScore.getP().E + ";" + Interface.gScore.getP().F + ";" + Interface.gScore.getP().G + ";\n");
         
         //Enregistrement des donnees
-        for(Donnee d : i.gScore.getDonnees()){
+        for(Donnee d : Interface.gScore.getDonnees()){
             bw.write("Donnee;" + d.getPath() + ";" + d.getNom() + ";" + d.getDateModif() + ";" + d.getDateCrea() + ";" + d.getDateOuvert() + ";"
             + d.getTaille() + ";" + d.getExtension() + ";" + d.getNbNom() + ";" + d.getFreqModif() + ";" + d.getFreqOuvert() + ";" + d.getScore() + ";\n");
         }

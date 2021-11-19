@@ -31,18 +31,35 @@ public class ChargementApplication {
     
     /**
      * Méthode à lancer pour récupérer les données de lancement précédents
+     * @param IGP
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public void chargerApplication() throws FileNotFoundException, IOException{
+    public void chargerApplication(InterfaceGraphiquePrincipale IGP) throws FileNotFoundException, IOException{
         FileReader fr = new FileReader(path);
         bf = new BufferedReader(fr);
+        
         String line = bf.readLine();// On récupère la ligne 1 (pallier interface)
         StringTokenizer sT = new StringTokenizer(line, ";");
         sT.nextToken(); //On supprime "Interface"
         String mot = sT.nextToken(); //On récupère le pallier
         Interface.pallier=Integer.parseInt(mot); //On crée le pallier de l'interface
         Interface.choixScore=Integer.parseInt(sT.nextToken()); //On enregistre le choix du score
+        
+        
+        //On récupère les infos de l'interface graphique sur les premières lignes
+        line = bf.readLine(); // On récupère la ligne suivante (path de corbeille)
+        sT = new StringTokenizer(line, ";");
+        sT.nextToken(); //On supprime "PathCorbeille"
+        if(sT.hasMoreTokens()){
+            IGP.setPathCorbeille(sT.nextToken());
+        }
+        line = bf.readLine(); // On récupère la ligne suivante (path d'archive)
+        sT = new StringTokenizer(line, ";");
+        sT.nextToken(); //On supprime "PathArchive"
+        if(sT.hasMoreTokens()){
+            IGP.setPathArchive(sT.nextToken());
+        }
         
         //Creation GestionScore de l'interface
         Interface.gScore = new GestionScore();
