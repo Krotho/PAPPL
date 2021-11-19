@@ -88,8 +88,6 @@ public class GestionScore {
      */
     public GestionScore() {
         this.paths = new ArrayList();
-        //Le chemin par défaut est celui du dossier téléchargements
-        paths.add("C:\\Users\\Boulanger\\Downloads");
         this.donnees = new ArrayList();
         this.extensionsTraites = new ArrayList();
         this.extensionsTraites.add(".pdf");
