@@ -7,6 +7,7 @@ package edu.centralenantes.pappl;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -46,8 +47,24 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
     
     //Param
     public static boolean paramOpen;
+
     
     
+    public String getPathArchive() {
+        return pathArchive;
+    }
+
+    public void setPathArchive(String pathArchive) {
+        this.pathArchive = pathArchive;
+    }
+
+    public String getPathCorbeille() {
+        return pathCorbeille;
+    }
+
+    public void setPathCorbeille(String pathCorbeille) {
+        this.pathCorbeille = pathCorbeille;
+    }
     
     
     /**
@@ -62,7 +79,17 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
         this.setLocationRelativeTo(null);
         this.addWindowListener(this);
         //Creation d'Interface
-        IT = new Interface(150);  
+        IT = new Interface(150); 
+        
+        //Charger Fichier Sauvegarde si il existe
+        try{
+            ChargementApplication ca = new ChargementApplication("Config.txt");
+            ca.chargerApplication(this);
+        }
+        catch (Exception e){
+            //Fichier Config non lu ou trouvé
+        }
+        
         paramOpen=false;
         //Creation du panel de la frame
         contentPanel=(JPanel)this.getContentPane();
@@ -110,7 +137,7 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
             IT.gestionInterface();
             liste.setListData(IT.gScore.getDonnees().toArray());
             secondPanel.add(jtoolBar,BorderLayout.NORTH);
-           ((CardLayout)contentPanel.getLayout()).next(contentPanel);
+           //((CardLayout)contentPanel.getLayout()).next(contentPanel);
         }
        
     }
@@ -372,7 +399,7 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
              if(JOptionPane.showConfirmDialog(contentPanel, "Voulez-vous sauvegarder la configuration ?","Confirmation",JOptionPane.OK_CANCEL_OPTION)==JOptionPane.YES_OPTION){
                  EnregistrerApplication EA = new EnregistrerApplication("Config.txt");//On crée l'objet pour enregistrer 
                  try {
-                     EA.enregistrerApplication(IT);//On enregistre
+                     EA.enregistrerApplication(this);//On enregistre
                  } catch (IOException ex) {
                      Logger.getLogger(InterfaceGraphiquePrincipale.class.getName()).log(Level.SEVERE, null, ex);
                  }
