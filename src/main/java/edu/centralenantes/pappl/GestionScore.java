@@ -70,7 +70,7 @@ public class GestionScore {
         }
         
         public Parametres(ArrayList<String> s){
-            this();
+            //this();
             if(s.size()>6){
                 A=s.indexOf(0);
                 B=s.indexOf(1);
@@ -165,13 +165,13 @@ public class GestionScore {
     
     public void setP(ArrayList<String> s){
         if(s.size()>6){
-            p.setA(s.indexOf(0));
-            p.setB(s.indexOf(1));
-            p.setC(s.indexOf(2));
-            p.setD(s.indexOf(3));
-            p.setE(s.indexOf(4));
-            p.setF(s.indexOf(5));
-            p.setG(s.indexOf(6));
+            p.setA(Double.parseDouble(s.get(0)));
+            p.setB(Double.parseDouble(s.get(1)));
+            p.setC(Double.parseDouble(s.get(2)));
+            p.setD(Double.parseDouble(s.get(3)));
+            p.setE(Double.parseDouble(s.get(4)));
+            p.setF(Double.parseDouble(s.get(5)));
+            p.setG(Double.parseDouble(s.get(6)));
         }
     }
     
@@ -238,7 +238,7 @@ public class GestionScore {
      * Méthode qui va trier les différentes Données de la liste en fonction de leur score
      */
     public void triScore(){
-        Collections.sort(this.donnees);
+        Collections.sort(this.donnees,Collections.reverseOrder());
     }
     
     /**

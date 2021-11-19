@@ -71,6 +71,7 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
     
     /**
      * Constructeur d'InterfaceGraphiquePrincipale
+     * @throws java.io.IOException
      */
     public InterfaceGraphiquePrincipale() throws IOException{
         

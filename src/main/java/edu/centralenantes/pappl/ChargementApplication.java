@@ -101,6 +101,7 @@ public class ChargementApplication {
         while(sT.hasMoreTokens()) {
              listeMots.add(sT.nextToken()); // On crée une liste de mots contenant toutes les infos de la liste paths
         }
+        System.out.println(listeMots);
         Interface.gScore.setP(listeMots);
         
         //Creation des donnees
