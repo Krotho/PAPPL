@@ -51,6 +51,7 @@ public class InterfaceGraphiqueParametres extends JDialog {
         pA.setLayout(new GridLayout(2,1));
         pA.add(Atxt);
         pA.add(A);
+        A.setValue((int)(Interface.gScore.getP().A/(1.0e-9)));
         pA.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,1));
         
         B = new JSlider(0,100);
@@ -58,7 +59,8 @@ public class InterfaceGraphiqueParametres extends JDialog {
         JPanel pB = new JPanel();
         pB.setLayout(new GridLayout(2,1));
         pB.add(Btxt);
-        pB.add(B);        
+        pB.add(B); 
+        B.setValue((int)(Interface.gScore.getP().B/(1)));
         pB.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,1));
         
         C = new JSlider(0,100);
@@ -67,6 +69,7 @@ public class InterfaceGraphiqueParametres extends JDialog {
         pC.setLayout(new GridLayout(2,1));
         pC.add(Ctxt);
         pC.add(C);
+        C.setValue((int)(Interface.gScore.getP().C/(1.0e-16)));
         pC.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,1));
         
         D = new JSlider(0,100);    
@@ -75,6 +78,7 @@ public class InterfaceGraphiqueParametres extends JDialog {
         pD.setLayout(new GridLayout(2,1));
         pD.add(Dtxt);
         pD.add(D);
+        D.setValue((int)(Interface.gScore.getP().D/(1)));
         pD.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,1));
         
         E = new JSlider(0,100);
@@ -83,6 +87,7 @@ public class InterfaceGraphiqueParametres extends JDialog {
         pE.setLayout(new GridLayout(2,1));
         pE.add(Etxt);
         pE.add(E);
+        E.setValue((int)(Interface.gScore.getP().E/(1.0e-11)));
         pE.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,1));
         
         F = new JSlider(0,100);
@@ -91,6 +96,7 @@ public class InterfaceGraphiqueParametres extends JDialog {
         pF.setLayout(new GridLayout(2,1));
         pF.add(Ftxt);
         pF.add(F);
+        F.setValue((int)(Interface.gScore.getP().F/(1.0e-11)));
         pF.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,1));
         
         G = new JSlider(0,100);      
@@ -99,6 +105,7 @@ public class InterfaceGraphiqueParametres extends JDialog {
         pG.setLayout(new GridLayout(2,1));
         pG.add(Gtxt);
         pG.add(G);
+        G.setValue((int)(Interface.gScore.getP().G/(1.0e-11)));
         pG.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,1));
         
         H = new JSlider(0,100);
@@ -107,6 +114,7 @@ public class InterfaceGraphiqueParametres extends JDialog {
         pH.setLayout(new GridLayout(2,1));
         pH.add(Htxt);
         pH.add(H);
+        //G.setValue((int)(Interface.gScore.getP().H/(1.0e-4)));
         pH.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,1));
         
         //Ajout au panel
