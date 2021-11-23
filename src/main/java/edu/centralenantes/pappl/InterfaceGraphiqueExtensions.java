@@ -70,6 +70,7 @@ public class InterfaceGraphiqueExtensions extends JDialog {
         valider.setPreferredSize(new Dimension(100,50));
         
         JButton reset = new JButton("Reset");
+        reset.addActionListener((e)->ResetListeExtensions());
         reset.setPreferredSize(new Dimension(100,50));
         
         JPanel boutonPannel = new JPanel(new FlowLayout());
@@ -92,10 +93,17 @@ public class InterfaceGraphiqueExtensions extends JDialog {
     
     private void ValidationListeExtensions(){
         //Interface.gScore.getP().A=A.getValue()*1.0e-9;
-        ArrayList<String> l_ext = new ArrayList<>();
+        ArrayList<String> l_ext = new ArrayList();
         l_ext.addAll(Arrays.asList(listeExtensions.getText().split(";")));
         Interface.gScore.setExtensionsTraites(l_ext);
         this.dispose();
+    }
+    
+    private void ResetListeExtensions(){
+        ArrayList<String> l = new ArrayList();
+        l.add(".pdf");
+        Interface.gScore.setExtensionsTraites(l);
+        listeExtensions.setText(".pdf;");
     }
     
 }
