@@ -1,0 +1,7 @@
+Interface;150;1;
+PathCorbeille;null;
+PathCorbeille;null;
+GScorePaths;
+GScoreIgnoredPaths;
+GScoreExtensionsTraites;.pdf;
+GScoreParametres;1.0E-8;0.0;1.0E-15;1.0;1.0E-10;1.0E-10;0.001;
