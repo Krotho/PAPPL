@@ -24,6 +24,7 @@ public class InterfaceGraphiqueParametres extends JDialog {
     private JSlider F;
     private JSlider G;
     private JSlider H;
+    private JComboBox jcbScore;
     
     
     /**
@@ -125,7 +126,14 @@ public class InterfaceGraphiqueParametres extends JDialog {
         panneauParam.add(pE);
         panneauParam.add(pF);
         panneauParam.add(pG);
-        panneauParam.add(pH);
+        //panneauParam.add(pH);
+        
+        // CREATION D UNE COMBO BOX POUR CHOISIR LE CALCUL DE SCORE \\
+        String[] listeScore = {"Calcul 1", "Calcul 2", "Calcul 3", "Calcul 4"};
+        jcbScore  = new JComboBox(listeScore);
+        jcbScore.setSelectedIndex(Interface.choixScore-1);
+        panneauParam.add(jcbScore);
+        
         
         
         // CREATION DU PANNEAU de bouton au sud \\
@@ -156,6 +164,8 @@ public class InterfaceGraphiqueParametres extends JDialog {
         Interface.gScore.getP().F=F.getValue()*1.0e-11;
         Interface.gScore.getP().G=G.getValue()*1.0e-4;
         //Interface.gScore.getP().H=H.getValue();
+        
+        Interface.choixScore=jcbScore.getSelectedIndex()+1;
         this.dispose();
     }
     

@@ -20,7 +20,6 @@ import java.util.regex.Pattern;
  * @author asjou
  */
 public class GestionScore {
-
     private List<String> paths; //Liste des paths à traiter
     private List<String> ignoredPaths; //Liste des paths à ignorer, qu'il s'agisse de dossiers ou de fichiers
     private List<Donnee> donnees; //Liste des données des fichiers trouvés
