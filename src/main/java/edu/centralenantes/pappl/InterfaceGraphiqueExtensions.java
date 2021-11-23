@@ -32,7 +32,7 @@ public class InterfaceGraphiqueExtensions extends JDialog {
     
     
     /**
-     * Constructeur de la classe InterfaceGraphiqueParametres
+     * Constructeur de la classe InterfaceGraphiqueExtensions
      */
     public InterfaceGraphiqueExtensions(InterfaceGraphiquePrincipale IGP){             
         //Creation de la frame Initiale
@@ -83,6 +83,10 @@ public class InterfaceGraphiqueExtensions extends JDialog {
         this.setVisible(true);
     }
     
+    /**
+     * Méthode créant le texte initiale à partir de la config et des extensions traitées
+     * @return 
+     */
     private String initText(){
         String s ="";
         for(String ext : Interface.gScore.getExtensionsTraites()){
@@ -90,7 +94,9 @@ public class InterfaceGraphiqueExtensions extends JDialog {
         }
         return s;
     }
-    
+    /**
+     * Méthode lancée lors de l'appuie sur le bouton valider, cela valider les extensions écrites ici dans gestionScore
+     */
     private void ValidationListeExtensions(){
         //Interface.gScore.getP().A=A.getValue()*1.0e-9;
         ArrayList<String> l_ext = new ArrayList();
@@ -99,6 +105,9 @@ public class InterfaceGraphiqueExtensions extends JDialog {
         this.dispose();
     }
     
+    /**
+     * Méthode lancée lors de l'appuie sur le bouton Reset, cela reset les extensions avec juste les pdf comme base
+     */
     private void ResetListeExtensions(){
         ArrayList<String> l = new ArrayList();
         l.add(".pdf");
