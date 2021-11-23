@@ -143,6 +143,7 @@ public class InterfaceGraphiqueParametres extends JDialog {
         valider.setPreferredSize(new Dimension(100,50));
         
         JButton reset = new JButton("Reset");
+        reset.addActionListener((e)->ResetParam());
         reset.setPreferredSize(new Dimension(100,50));
         
         JPanel boutonPannel = new JPanel(new FlowLayout());
@@ -169,4 +170,13 @@ public class InterfaceGraphiqueParametres extends JDialog {
         this.dispose();
     }
     
+    private void ResetParam(){
+        A.setValue(10);
+        B.setValue(0);
+        C.setValue(10);
+        D.setValue(0);
+        E.setValue(10);
+        F.setValue(10);
+        G.setValue(10);
+    }
 }
