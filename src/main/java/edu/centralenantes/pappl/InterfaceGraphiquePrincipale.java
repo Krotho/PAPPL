@@ -196,7 +196,7 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
      * Permet de définir les archive en lançant un JFileChooser
      */
     private void defArchive(){
-        JFileChooser archiveFileChooser = new JFileChooser();
+        JFileChooser archiveFileChooser = new JFileChooser(pathArchive);
         archiveFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int retour = archiveFileChooser.showOpenDialog(this);
 
@@ -211,7 +211,7 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
      * Permet de définir le dossier de Corbeille en lançant un JFileChooser
      */
     private void defCorbeille(){
-        JFileChooser corbeilleFileChooser = new JFileChooser();
+        JFileChooser corbeilleFileChooser = new JFileChooser(pathCorbeille);
         corbeilleFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int retour = corbeilleFileChooser.showOpenDialog(this);
 
