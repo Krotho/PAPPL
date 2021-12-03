@@ -196,6 +196,11 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
         gestionPaths.addActionListener((e)->defPaths());
         toolBar.add(gestionPaths);
         
+        //Bouton de définition des dossiers dans lequel l'application ne doit pas se lancer
+        JButton gestionIgnoredPaths = new JButton("Dossiers exclus pour l'application");
+        gestionIgnoredPaths.addActionListener((e)->defPaths());
+        toolBar.add(gestionIgnoredPaths);
+        
         return toolBar;
     }
     
@@ -254,7 +259,12 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
         InterfaceGraphiquePaths IGP  = new InterfaceGraphiquePaths();
     }
 
-    
+    /**
+     * Permet de choisir quels paths ne vont PAS être parcourus lors du lancement de l'application
+     */
+    private void defIgnoredPaths(){
+        InterfaceGraphiqueIgnoredPaths IGP  = new InterfaceGraphiqueIgnoredPaths();
+    }
     
     
     /**
