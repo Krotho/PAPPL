@@ -60,12 +60,12 @@ public class GestionScore {
 
         public Parametres() {
             A=1.0e-8;
-            B=0;
-            C=1.0e-15;
+            B=1;
+            C=1.0e-30;
             D=1;
             E=1.0e-10;
-            F=1.0e-10;
-            G=1.0e-3;
+            F=1;
+            G=1.0e-6;
         }
         
         public Parametres(ArrayList<String> s){
@@ -248,7 +248,6 @@ public class GestionScore {
         double s=0;
         s=p.A*(d.getDateOuvert()-d.getDateCrea())/(1+p.D*d.getFreqOuvert());
         d.setScore(s);
-        //System.out.println(d.getScore());
     }
     /**
      * Deuxième méthode de calcul du score d'un fichier en se concentrant uniquement sur la date de derniere ouverture (exponentielle)
@@ -256,7 +255,8 @@ public class GestionScore {
      */
     public void calculScore2(Donnee d){
         double s =0;
-        s=p.A*Math.exp(p.B+p.C*((d.getDateOuvert()-d.getDateCrea())/(1+p.D*d.getFreqOuvert())));
+        s=p.C*Math.exp(p.B+p.A*((d.getDateOuvert()-d.getDateCrea())/(1+p.D*d.getFreqOuvert())));
+        System.out.println(s);
         d.setScore((float)s);
     }
     

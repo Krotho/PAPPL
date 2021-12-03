@@ -47,7 +47,7 @@ public class InterfaceGraphiqueParametres extends JDialog {
         //Gestion des sliders \\
       
         A = new JSlider(0,100);
-        JLabel Atxt= new JLabel("A",SwingConstants.CENTER);
+        JLabel Atxt= new JLabel("Facteur delta ouverture",SwingConstants.CENTER);
         JPanel pA = new JPanel();
         pA.setLayout(new GridLayout(2,1));
         pA.add(Atxt);
@@ -56,7 +56,7 @@ public class InterfaceGraphiqueParametres extends JDialog {
         pA.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,1));
         
         B = new JSlider(0,100);
-        JLabel Btxt= new JLabel("B",SwingConstants.CENTER);
+        JLabel Btxt= new JLabel("constante expo ouverture",SwingConstants.CENTER);
         JPanel pB = new JPanel();
         pB.setLayout(new GridLayout(2,1));
         pB.add(Btxt);
@@ -65,16 +65,16 @@ public class InterfaceGraphiqueParametres extends JDialog {
         pB.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,1));
         
         C = new JSlider(0,100);
-        JLabel Ctxt= new JLabel("C",SwingConstants.CENTER);
+        JLabel Ctxt= new JLabel("facteur expo ouverture",SwingConstants.CENTER);
         JPanel pC = new JPanel();
         pC.setLayout(new GridLayout(2,1));
         pC.add(Ctxt);
         pC.add(C);
-        C.setValue((int)(Interface.gScore.getP().C/(1.0e-16)));
+        C.setValue((int)(Interface.gScore.getP().C/(1.0e-30)));
         pC.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,1));
         
         D = new JSlider(0,100);    
-        JLabel Dtxt= new JLabel("D",SwingConstants.CENTER);
+        JLabel Dtxt= new JLabel("facteur freq ouverture",SwingConstants.CENTER);
         JPanel pD = new JPanel();
         pD.setLayout(new GridLayout(2,1));
         pD.add(Dtxt);
@@ -83,7 +83,7 @@ public class InterfaceGraphiqueParametres extends JDialog {
         pD.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,1));
         
         E = new JSlider(0,100);
-        JLabel Etxt= new JLabel("E",SwingConstants.CENTER);
+        JLabel Etxt= new JLabel("facteur delta modif",SwingConstants.CENTER);
         JPanel pE = new JPanel();
         pE.setLayout(new GridLayout(2,1));
         pE.add(Etxt);
@@ -92,21 +92,21 @@ public class InterfaceGraphiqueParametres extends JDialog {
         pE.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,1));
         
         F = new JSlider(0,100);
-        JLabel Ftxt= new JLabel("F",SwingConstants.CENTER);
+        JLabel Ftxt= new JLabel("facteur freq modif",SwingConstants.CENTER);
         JPanel pF = new JPanel();
         pF.setLayout(new GridLayout(2,1));
         pF.add(Ftxt);
         pF.add(F);
-        F.setValue((int)(Interface.gScore.getP().F/(1.0e-11)));
+        F.setValue((int)(Interface.gScore.getP().F));
         pF.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,1));
         
         G = new JSlider(0,100);      
-        JLabel Gtxt= new JLabel("G",SwingConstants.CENTER);
+        JLabel Gtxt= new JLabel("facteur taille",SwingConstants.CENTER);
         JPanel pG = new JPanel();
         pG.setLayout(new GridLayout(2,1));
         pG.add(Gtxt);
         pG.add(G);
-        G.setValue((int)(Interface.gScore.getP().G/(1.0e-11)));
+        G.setValue((int)(Interface.gScore.getP().G/(1.0e-7)));
         pG.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,1));
         
         H = new JSlider(0,100);
@@ -115,7 +115,7 @@ public class InterfaceGraphiqueParametres extends JDialog {
         pH.setLayout(new GridLayout(2,1));
         pH.add(Htxt);
         pH.add(H);
-        //G.setValue((int)(Interface.gScore.getP().H/(1.0e-4)));
+        //H.setValue((int)(Interface.gScore.getP().H/(1.0e-4)));
         pH.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,1));
         
         //Ajout au panel
@@ -158,12 +158,12 @@ public class InterfaceGraphiqueParametres extends JDialog {
     
     private void ValidationParam(){
         Interface.gScore.getP().A=A.getValue()*1.0e-9;
-        Interface.gScore.getP().B=B.getValue()*0;
-        Interface.gScore.getP().C=C.getValue()*1.0e-16;
+        Interface.gScore.getP().B=B.getValue();
+        Interface.gScore.getP().C=C.getValue()*1.0e-30;
         Interface.gScore.getP().D=D.getValue();
         Interface.gScore.getP().E=E.getValue()*1.0e-11;
-        Interface.gScore.getP().F=F.getValue()*1.0e-11;
-        Interface.gScore.getP().G=G.getValue()*1.0e-4;
+        Interface.gScore.getP().F=F.getValue();
+        Interface.gScore.getP().G=G.getValue()*1.0e-7;
         //Interface.gScore.getP().H=H.getValue();
         
         Interface.choixScore=jcbScore.getSelectedIndex()+1;
