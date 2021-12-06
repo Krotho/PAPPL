@@ -54,7 +54,7 @@ public class Interface {
     public void actualisationInterface() throws Exception{
         gScore.setDonnees(new ArrayList());
         gScore.parcours();
-        gScore.calculScore(1);
+        gScore.calculScore(choixScore);
         gScore.triScore();
     }
     /**
