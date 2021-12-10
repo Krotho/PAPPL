@@ -173,7 +173,7 @@ public class InterfaceGraphiquePrincipale extends JFrame implements WindowListen
         
         //Bouton de définition des dossiers dans lequel l'application ne doit pas se lancer
         JButton gestionIgnoredPaths = new JButton("Dossiers exclus pour l'application");
-        gestionIgnoredPaths.addActionListener((e)->defPaths());
+        gestionIgnoredPaths.addActionListener((e)->defIgnoredPaths());
         toolBar.add(gestionIgnoredPaths);
         
         return toolBar;
