@@ -1,4 +1,5 @@
 /*
+<<<<<<< HEAD
 *PAPPL outil de conseil à l'archivage et à la suppression de fichiers sur une machine personnelle
 *Copyright (C) 2021  Boulanger & Jourlin, Ecole Centrale de Nantes
 *
@@ -16,6 +17,7 @@
 *License along with this library; if not, write to the Free Software
 *Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 *USA
+
  */
 package edu.centralenantes.pappl;
 
