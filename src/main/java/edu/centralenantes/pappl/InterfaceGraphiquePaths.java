@@ -49,6 +49,11 @@ public class InterfaceGraphiquePaths extends JFrame {
         suppPath.addActionListener((e)->SupprimerPath());
         boutonpanelPath.add(suppPath);
                 
+        //Bouton permettant à l'utilisateur de valider puis de fermer la fenêtre
+        JButton valider = new JButton("Valider");
+        valider.addActionListener((e)->Valider());
+        boutonpanelPath.add(valider);
+        
         //Ajouter tout ça à la frame       
         contentPane.add(jspp);
         contentPane.add(boutonpanelPath, BorderLayout.SOUTH);
@@ -84,5 +89,12 @@ public class InterfaceGraphiquePaths extends JFrame {
             i++;
         }
         listePath.setListData(new Vector(Interface.gScore.getPaths()));
+    }
+    
+    /**
+     * Méthode permettant à l'utilisateur de valider et donc de fermer la fenêtre
+    */
+    private void Valider(){
+        this.dispose();
     }
 }
