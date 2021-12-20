@@ -1,7 +1,21 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+*PAPPL outil de conseil à l'archivage et à la suppression de fichiers sur une machine personnelle
+*Copyright (C) 2021  Boulanger & Jourlin, Ecole Centrale de Nantes
+*
+*This library is free software; you can redistribute it and/or
+*modify it under the terms of the GNU Lesser General Public
+*License as published by the Free Software Foundation; either
+*version 2.1 of the License, or (at your option) any later version.
+*
+*This library is distributed in the hope that it will be useful,
+*but WITHOUT ANY WARRANTY; without even the implied warranty of
+*MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+*Lesser General Public License for more details.
+*
+*You should have received a copy of the GNU Lesser General Public
+*License along with this library; if not, write to the Free Software
+*Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+*USA
  */
 package edu.centralenantes.pappl;
 
@@ -20,7 +34,6 @@ import java.util.regex.Pattern;
  * @author asjou
  */
 public class GestionScore {
-
     private List<String> paths; //Liste des paths à traiter
     private List<String> ignoredPaths; //Liste des paths à ignorer, qu'il s'agisse de dossiers ou de fichiers
     private List<Donnee> donnees; //Liste des données des fichiers trouvés
@@ -61,16 +74,16 @@ public class GestionScore {
 
         public Parametres() {
             A=1.0e-8;
-            B=0;
-            C=1.0e-15;
+            B=1;
+            C=1.0e-30;
             D=1;
             E=1.0e-10;
-            F=1.0e-10;
-            G=1.0e-3;
+            F=1;
+            G=1.0e-6;
         }
         
         public Parametres(ArrayList<String> s){
-            this();
+            //this();
             if(s.size()>6){
                 A=s.indexOf(0);
                 B=s.indexOf(1);
@@ -88,8 +101,6 @@ public class GestionScore {
      */
     public GestionScore() {
         this.paths = new ArrayList();
-        //Le chemin par défaut est celui du dossier téléchargements
-        paths.add("C:\\Users\\Boulanger\\Downloads");
         this.donnees = new ArrayList();
         this.extensionsTraites = new ArrayList();
         this.extensionsTraites.add(".pdf");
@@ -167,13 +178,13 @@ public class GestionScore {
     
     public void setP(ArrayList<String> s){
         if(s.size()>6){
-            p.setA(s.indexOf(0));
-            p.setB(s.indexOf(1));
-            p.setC(s.indexOf(2));
-            p.setD(s.indexOf(3));
-            p.setE(s.indexOf(4));
-            p.setF(s.indexOf(5));
-            p.setG(s.indexOf(6));
+            p.setA(Double.parseDouble(s.get(0)));
+            p.setB(Double.parseDouble(s.get(1)));
+            p.setC(Double.parseDouble(s.get(2)));
+            p.setD(Double.parseDouble(s.get(3)));
+            p.setE(Double.parseDouble(s.get(4)));
+            p.setF(Double.parseDouble(s.get(5)));
+            p.setG(Double.parseDouble(s.get(6)));
         }
     }
     
@@ -240,7 +251,7 @@ public class GestionScore {
      * Méthode qui va trier les différentes Données de la liste en fonction de leur score
      */
     public void triScore(){
-        Collections.sort(this.donnees);
+        Collections.sort(this.donnees,Collections.reverseOrder());
     }
     
     /**
@@ -251,7 +262,6 @@ public class GestionScore {
         double s=0;
         s=p.A*(d.getDateOuvert()-d.getDateCrea())/(1+p.D*d.getFreqOuvert());
         d.setScore(s);
-        //System.out.println(d.getScore());
     }
     /**
      * Deuxième méthode de calcul du score d'un fichier en se concentrant uniquement sur la date de derniere ouverture (exponentielle)
@@ -259,7 +269,8 @@ public class GestionScore {
      */
     public void calculScore2(Donnee d){
         double s =0;
-        s=p.A*Math.exp(p.B+p.C*((d.getDateOuvert()-d.getDateCrea())/(1+p.D*d.getFreqOuvert())));
+        s=p.C*Math.exp(p.B+p.A*((d.getDateOuvert()-d.getDateCrea())/(1+p.D*d.getFreqOuvert())));
+        System.out.println(s);
         d.setScore((float)s);
     }
     
@@ -392,5 +403,16 @@ public class GestionScore {
             }
         }
         return null;
+    }
+    
+    public ArrayList<Donnee> getDonneesPallier(int pallier){
+        ArrayList<Donnee> alDonnees = new ArrayList();
+        for(Donnee d : donnees){
+            if(d.getScore()<pallier){
+                return alDonnees;
+            }
+            else{alDonnees.add(d);}
+        }
+        return alDonnees;
     }
 }

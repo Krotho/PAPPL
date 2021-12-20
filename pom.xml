@@ -28,7 +28,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>edu.centralenantes.pappl.Test</mainClass>
+                            <mainClass>edu.centralenantes.pappl.InterfaceGraphiquePrincipale</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

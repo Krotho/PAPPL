@@ -1,7 +1,21 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+*PAPPL outil de conseil à l'archivage et à la suppression de fichiers sur une machine personnelle
+*Copyright (C) 2021  Boulanger & Jourlin, Ecole Centrale de Nantes
+*
+*This library is free software; you can redistribute it and/or
+*modify it under the terms of the GNU Lesser General Public
+*License as published by the Free Software Foundation; either
+*version 2.1 of the License, or (at your option) any later version.
+*
+*This library is distributed in the hope that it will be useful,
+*but WITHOUT ANY WARRANTY; without even the implied warranty of
+*MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+*Lesser General Public License for more details.
+*
+*You should have received a copy of the GNU Lesser General Public
+*License along with this library; if not, write to the Free Software
+*Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+*USA
  */
 package edu.centralenantes.pappl;
 
@@ -31,18 +45,35 @@ public class ChargementApplication {
     
     /**
      * Méthode à lancer pour récupérer les données de lancement précédents
+     * @param IGP
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public void chargerApplication() throws FileNotFoundException, IOException{
+    public void chargerApplication(InterfaceGraphiquePrincipale IGP) throws FileNotFoundException, IOException{
         FileReader fr = new FileReader(path);
         bf = new BufferedReader(fr);
+        
         String line = bf.readLine();// On récupère la ligne 1 (pallier interface)
         StringTokenizer sT = new StringTokenizer(line, ";");
         sT.nextToken(); //On supprime "Interface"
         String mot = sT.nextToken(); //On récupère le pallier
         Interface.pallier=Integer.parseInt(mot); //On crée le pallier de l'interface
         Interface.choixScore=Integer.parseInt(sT.nextToken()); //On enregistre le choix du score
+        
+        
+        //On récupère les infos de l'interface graphique sur les premières lignes
+        line = bf.readLine(); // On récupère la ligne suivante (path de corbeille)
+        sT = new StringTokenizer(line, ";");
+        sT.nextToken(); //On supprime "PathCorbeille"
+        if(sT.hasMoreTokens()){
+            IGP.setPathCorbeille(sT.nextToken());
+        }
+        line = bf.readLine(); // On récupère la ligne suivante (path d'archive)
+        sT = new StringTokenizer(line, ";");
+        sT.nextToken(); //On supprime "PathArchive"
+        if(sT.hasMoreTokens()){
+            IGP.setPathArchive(sT.nextToken());
+        }
         
         //Creation GestionScore de l'interface
         Interface.gScore = new GestionScore();
@@ -84,6 +115,7 @@ public class ChargementApplication {
         while(sT.hasMoreTokens()) {
              listeMots.add(sT.nextToken()); // On crée une liste de mots contenant toutes les infos de la liste paths
         }
+        System.out.println(listeMots);
         Interface.gScore.setP(listeMots);
         
         //Creation des donnees
