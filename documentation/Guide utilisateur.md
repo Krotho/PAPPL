@@ -30,7 +30,8 @@ Devrait être compatible Linux et Mac
 
 ### Installation du logiciel
 
-TODO
+Pour installer le logiciel, il suffit de télécharger le fichier .jar "LDEK??????" et de l'éxecuter via l'invite de commandes avec la commande suivante
+java -jar "nkf,kk,fre,ke,nfn????"
 
 ## Guide de l'utilisateur
 
