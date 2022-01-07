@@ -31,7 +31,7 @@ Devrait être compatible Linux et Mac
 ### Installation du logiciel
 
 Pour installer le logiciel, il suffit de télécharger le fichier .jar "LDEK??????" et de l'éxecuter via l'invite de commandes avec la commande suivante
-java -jar "nkf,kk,fre,ke,nfn????"
+java -jar "PAPPL-jwd.jar"
 
 ## Guide de l'utilisateur
 
@@ -53,14 +53,12 @@ L'utilisateur fait ensuite le choix de quels critères vont être prépondérant
 
 Enfin, lorsque le score a été calculé suivant les critères fixés, le logiciel fourni à l'utilisateur une liste de fichiers qu'il recommande soit de supprimer, soit d'archiver. Si l'utilisateur décide de protéger un fichier particulier d'être présenté par l'application, il peut le définir à ce moment là, et cela restera enregistré pour la prochaine utilisation.
 
-### Architecture générale du logiciel
-
-TODO
 
 ### Exemples d'utilisation
 
-TODO
+On peut regarder tous les fichiers de type pdf, txt, docx qui sont des fichiers utilisés par exemple dans des cours dont on n'a plus l'utilité direct. Ainsi en ajoutant tous les chemins d'accès dans lesquels sont stockés les fichiers de cours (téléchargement et/ou autre) et en indiquant les extensions traitées, on peut voir quels fichiers sont à stocker.
 
 ### Message d'erreur et problèmes connus
 
-TODO
+Nous avons rencontré un problème une fois, lors d'une présentation, ce problème permettait de lancer la suppression et l'archivage sans avoir définit de dossier.
+Cependant, nous n'avons jamais réussi à le reproduire.
